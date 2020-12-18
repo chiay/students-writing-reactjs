@@ -1,5 +1,5 @@
 # Studentswriting.com
-This is a repository for studentswriting.com implemented using Next.js and TailwindCSS.
+This is a repository for studentswriting.com implemented in React and Mongodb.
 
 ## Quick Start
 - Clone this repo
