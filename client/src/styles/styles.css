@@ -1,0 +1,274 @@
+@import url("https://fonts.googleapis.com/css2?family=Commissioner:wght@300;400;500&display=swap");
+html {
+  font-size: 100%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  -webkit-box-sizing: inherit;
+          box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Commissioner', sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  color: #991B1B;
+  line-height: 1.3;
+}
+
+.link,
+.link:visited,
+.link:hover {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-weight: 400;
+}
+
+button {
+  background: -webkit-gradient(linear, left top, right top, from(#EF4444), to(#EAB308));
+  background: linear-gradient(to right, #EF4444, #EAB308);
+  padding: 0.75rem;
+  border: none;
+  border-radius: 1rem;
+  font-size: 0.875rem;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background: -webkit-gradient(linear, right top, left top, from(#EF4444), to(#EAB308));
+  background: linear-gradient(to left, #EF4444, #EAB308);
+}
+
+.container {
+  width: 100%;
+  padding: 0.5rem;
+}
+
+.flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.flex-jc-sb {
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.flex-jc-sa {
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.flex-jc-c {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.flex-ai-c {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.flex-col {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+@media (max-width: 1023px) {
+  .hide-for-mobile {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hide-for-desktop {
+    display: none;
+  }
+}
+
+.nav {
+  padding: 0rem 1.5rem;
+  background: -webkit-gradient(linear, right top, left top, from(#EF4444), to(#EAB308));
+  background: linear-gradient(to left, #EF4444, #EAB308);
+  border-radius: 1rem;
+  font-size: 1rem;
+  color: #991B1B;
+  -webkit-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.2);
+          box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.2);
+}
+
+.nav__logo .logo {
+  margin-right: 0.75rem;
+}
+
+.nav__logo .title {
+  color: #FDE047;
+}
+
+.nav__links {
+  width: auto;
+}
+
+.nav__links ul {
+  text-align: center;
+}
+
+.nav__links ul :not(:last-child) {
+  margin-right: 1.5rem;
+}
+
+.nav__links ul li {
+  padding: 0.5rem;
+}
+
+.nav__user .signupLink {
+  padding: 0.75rem;
+  border-radius: 10px;
+  margin-right: 0.5rem;
+}
+
+.nav__user .signupLink:hover {
+  color: #FACC15;
+}
+
+.nav__user .loginLink {
+  padding: 0.75rem;
+  border-radius: 10px;
+  background-color: #FACC15;
+}
+
+.nav__user .loginLink:hover {
+  background: -webkit-gradient(linear, left top, left bottom, from(#FACC15), to(#FEF08A));
+  background: linear-gradient(180deg, #FACC15, #FEF08A);
+}
+
+.hero {
+  width: 100%;
+  min-height: 50vh;
+  background-color: #F4F4F5;
+  margin: 0.5rem;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  -webkit-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.2);
+          box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.2);
+}
+
+.hero__text {
+  padding: 1.5rem;
+}
+
+.hero__text h1 {
+  padding: 1rem 0;
+  color: #854D0E;
+  font-size: 3rem;
+}
+
+.hero__text h3 {
+  padding: 0.5rem 0;
+  color: #71717A;
+  font-size: 1.25rem;
+}
+
+.hero__text .btnStart {
+  margin-top: 1rem;
+  padding: 0.75rem 2rem;
+}
+
+.signUp {
+  margin-top: 5rem;
+  border-radius: 1rem;
+  -webkit-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.2);
+          box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.2);
+}
+
+.signUp__image {
+  padding: 2rem;
+}
+
+.signUp__input {
+  height: 100%;
+  background: #FACC15;
+  padding: 1rem;
+  border-radius: 0rem 1rem 1rem 0rem;
+}
+
+.signUp__input h1 {
+  padding: 1rem;
+}
+
+.signUp__input form :not(:last-child) {
+  margin-bottom: 0.75rem;
+}
+
+.signUp__input form input {
+  padding: 0.5rem;
+  border: 1px solid #F4F4F5;
+  border-radius: 0.5rem;
+}
+
+.signUp__input .link {
+  margin-top: 1rem;
+}
+
+.login {
+  margin-top: 5rem;
+  border-radius: 1rem;
+  -webkit-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.2);
+          box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.2);
+}
+
+.login__input {
+  height: 100%;
+  background: #FACC15;
+  padding: 1rem;
+  margin-right: 2rem;
+  border-radius: 1rem 0rem 0rem 1rem;
+}
+
+.login__input h1 {
+  padding: 1rem;
+}
+
+.login__input form :not(:last-child) {
+  margin-bottom: 0.75rem;
+}
+
+.login__input form input {
+  padding: 0.5rem;
+  border: 1px solid #F4F4F5;
+  border-radius: 0.5rem;
+}
+
+.login__input .link {
+  margin-top: 1rem;
+}
+
+.login__image {
+  padding: 2rem;
+}
+/*# sourceMappingURL=styles.css.map */
