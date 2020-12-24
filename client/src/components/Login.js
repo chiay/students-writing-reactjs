@@ -1,6 +1,6 @@
 import React, {useState, useRef} from 'react';
 import Layout from './Layout';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import loginImg from '../images/undraw_my_password.svg';
 
@@ -8,13 +8,23 @@ export default function Signup() {
 	const emailRef = useRef();
 	const passwordRef = useRef();
 
-	const { signUp } = useAuth();
+	const { login } = useAuth();
 	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
 
+	const history = useHistory();
+
 	async function handleSubmit(e) {
 		e.preventDefault();
-		
+		try {
+			setError('');
+			setLoading(true);
+			await login(emailRef.current.value, passwordRef.current.value);
+			setLoading(false);
+			history.push('/');
+		} catch (err) {
+			setError('Wrong email/password. Please try again.');
+		}
 	}
 
 	return (

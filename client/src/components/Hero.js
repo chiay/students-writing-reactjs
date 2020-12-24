@@ -1,13 +1,19 @@
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import publishArticleImg from '../images/undraw_publish_article.svg';
 import { motion } from 'framer-motion';
+import { useAuth } from '../contexts/AuthContext';
 
 export default function Hero() {
 	const history = useHistory();
+	const { currentUser } = useAuth();
 
 	function handleClick() {
-		history.push('/signup');
+		if (currentUser) {
+			history.push('/promptlist')
+		} else {
+			history.push('/signup');
+		}
 	}
 
 	return (

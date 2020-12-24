@@ -1,10 +1,10 @@
-@media (min-width: 640px) {
+@media (min-width: 600px) {
    // styles go here
 }
 
-$breakpoint-up: ("medium": "640px", "large": "1024px", "xlarge": "1440px");
+$breakpoint-up: ("sm": "600px","md": "960px", "lg": "1280px", "xl": "1920px");
 
-$breakpoint-down: ("small": "639px", "medium": "1023px", "large": "1439px");
+$breakpoint-down: ("xs": "599", "sm": "959px", "md": "1279px", "lg": "1919px");
 
 @mixin breakpoint-up($size) {
    @media (min-width: map-get($breakpoint-up, $size)) {

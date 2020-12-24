@@ -9,7 +9,7 @@ const { getUser, checkRole } = require('./middleware');
  */
 router.get('/', async (req, res) => {
 	try {
-		const prompts = await Prompt.find({});
+		const prompts = await Prompt.find({}, { posts: 0 });
 		res.status(200).json(prompts);
 	} catch (err) {
 		return res.status(500).json({ message: err.message });

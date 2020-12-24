@@ -8,6 +8,10 @@ const promptSchema = new mongoose.Schema({
 	description: {
 		type: String,
 	},
+	type: {
+		type: String,
+		required: true,
+	},
 	createdOn: {
 		type: Date,
 		required: true,

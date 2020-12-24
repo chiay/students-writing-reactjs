@@ -28,7 +28,7 @@ async function getUser(req, res, next) {
  */
 async function checkRole(req, res, next) {
 	try {
-		const user = await User.findOne({ email: req.body.email });
+		const user = await User.findById({ _id: req.user._id });
 		if (user.role !== 'admin') {
 			return res.status(401).send('Access denied!');
 		}

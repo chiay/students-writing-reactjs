@@ -1,8 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Commissioner:wght@300;400;500&display=swap');
+//@import '../../node_modules/bulma/bulma.sass';
 
 @import 'mixins';
 @import 'variables';
 @import 'colors';
+
+// Update Bulma's global variables
+//$family-sans-serif: 'Commissioner', sans-serif;
+
 @import 'globals';
 
 @import 'nav';

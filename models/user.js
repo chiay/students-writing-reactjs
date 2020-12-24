@@ -11,8 +11,7 @@ const userSchema = new mongoose.Schema({
 		required: true,
 	},
 	alias: {
-		type: String,
-		required: true,
+		type: String
 	},
 	name: {
 		firstName: {

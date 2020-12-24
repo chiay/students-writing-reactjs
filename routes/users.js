@@ -2,37 +2,59 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
-const { getUser, checkRole } = require('./middleware');
+const passport = require('passport');
+const jwt = require('jsonwebtoken');
+const { getUser } = require('./middleware');
+const userRole = require('../constants/userRole');
 
 /**
  * Get all users
  * @access private
  */
-router.get('/', checkRole, async (req, res) => {
-	try {
-		const users = await User.find({});
-		res.status(200).json(users);
-	} catch (err) {
-		return res.status(500).json({ message: err.message });
+router.get(
+	'/',
+	passport.authenticate('jwt', { session: false }),
+	async (req, res) => {
+		if (req.user.role !== userRole.ADMIN) {
+			return res.status(401).send('Access denied!');
+		}
+		try {
+			const users = await User.find({}, { password: 0 });
+			res.status(200).json(users);
+		} catch (err) {
+			return res.status(500).json({ message: err.message });
+		}
+	}
+);
+
+/**
+ * Login a user via passport and issue JWT
+ * @access public
+ */
+router.post('/login', passport.authenticate('login'), (req, res) => {
+	if (req.user) {
+		const token = jwt.sign({ id: req.user._id }, process.env.JWT_SECRET);
+		return res.status(200).send({
+			success: true,
+			token,
+			email: req.user.email,
+			name: req.user.name,
+			alias: req.user.alias,
+			role: req.user.role,
+		});
+	} else {
+		return res
+			.status(500)
+			.json({ success: false, message: 'Authentication failed.' });
 	}
 });
 
 /**
- * Login a user
+ * Logout a user via passport
  * @access public
  */
-router.post('/login', async (req, res) => {
-	try {
-		const user = await User.findOne({ email: req.body.email });
-		if (user == null) {
-			return res.status(400).send('Wrong email or password!');
-		}
-		if (await bcrypt.compare(req.body.password, user.password)) {
-			res.status(200).send('Success');
-		}
-	} catch (err) {
-		return res.status(500).json({ message: err.message });
-	}
+router.get('/logout', (req, res) => {
+	req.logOut();
 });
 
 /**
@@ -45,10 +67,18 @@ router.post('/register', checkUser, async (req, res) => {
 		const tempUser = new User({
 			email: req.body.email,
 			password: hashPassword,
-			role: 'user',
+			role: userRole.USER,
 		});
 		const newUser = await tempUser.save();
-		res.status(200).json(newUser);
+		const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
+		return res.status(200).send({
+			success: true,
+			token,
+			email: newUser.email,
+			name: newUser.name,
+			alias: newUser.alias,
+			role: newUser.role,
+		});
 	} catch (err) {
 		return res.status(500).json({ message: err.message });
 	}
@@ -59,53 +89,88 @@ router.post('/register', checkUser, async (req, res) => {
  * @access private
  */
 
-router.patch('/setRole', checkRole, getUser, async (req, res) => {
-	if (req.body.role != null) {
-		res.User.role = req.body.role;
+router.patch(
+	'/setRole',
+	passport.authenticate('jwt', { session: false }),
+	getUser,
+	async (req, res) => {
+		if (req.user.role !== userRole.ADMIN) {
+			return res.status(401).send('Access denied!');
+		}
+		if (req.body.role != null) {
+			res.User.role = req.body.role;
+		}
+		try {
+			const updatedUser = await res.User.save();
+			return res.status(200).json({
+				success: true,
+				email: updatedUser.email,
+				name: updatedUser.name,
+				alias: updatedUser.alias,
+				role: updatedUser.role,
+			});
+		} catch (err) {
+			return res.status(400).json({ message: err.message });
+		}
 	}
-	try {
-		const updatedUser = await res.User.save();
-		res.status(200).json(updatedUser);
-	} catch (err) {
-		return res.status(400).json({ message: err.message });
-	}
-});
+);
 
 /**
  * Update user profile
  * @access public
  */
 
-router.patch('/updateProfile', getUser, async (req, res) => {
-	if (req.body.newEmail != null) {
-		res.User.email = req.body.newEmail;
+router.patch(
+	'/updateProfile',
+	passport.authenticate('jwt', { session: false }),
+	async (req, res) => {
+		if (req.body.newEmail != null) {
+			req.user.email = req.body.newEmail;
+		}
+		if (req.body.name.firstName != null) {
+			req.user.name.firstName = req.body.name.firstName;
+		}
+		if (req.body.name.lastName != null) {
+			req.user.name.lastName = req.body.name.lastName;
+		}
+		if (req.body.alias != null) {
+			req.user.alias = req.body.alias;
+		}
+		try {
+			const updatedUser = await req.user.save();
+			res.status(200).json({
+				success: true,
+				email: updatedUser.email,
+				name: updatedUser.name,
+				alias: updatedUser.alias,
+				role: updatedUser.role,
+			});
+		} catch (err) {
+			return res.status(400).json({ message: err.message });
+		}
 	}
-	if (req.body.name.firstName != null) {
-		res.User.name.firstName = req.body.name.firstName;
-	}
-	if (req.body.name.lastName != null) {
-		res.User.name.lastName = req.body.name.lastName;
-	}
-	try {
-		const updatedUser = await res.User.save();
-		res.json(updatedUser);
-	} catch (err) {
-		return res.status(400).json({ message: err.message });
-	}
-});
+);
 
 /**
  * Delete user
  * @access private
  */
-router.delete('/delete', getUser, checkRole, async (req, res) => {
-	try {
-		await res.User.remove();
-		res.json({ message: 'User removed.' });
-	} catch (err) {
-		return res.status(500).json({ message: err.message });
+router.delete(
+	'/delete',
+	passport.authenticate('jwt', { session: false }),
+	getUser,
+	async (req, res) => {
+		if (req.user.role !== userRole.ADMIN) {
+			return res.status(401).send('Access denied!');
+		}
+		try {
+			await res.User.remove();
+			return res.status(200).json({ message: 'User removed.' });
+		} catch (err) {
+			return res.status(500).json({ message: err.message });
+		}
 	}
-});
+);
 
 /**
  * Check if user exist

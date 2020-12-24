@@ -45,10 +45,17 @@ button {
 	border: none;
 	border-radius: 1rem;
 	font-size: $text-sm;
+	font-family: 'Commissioner', sans-serif;
 	color: white;
 	cursor: pointer;
 	&:hover {
 		background: linear-gradient(to left, $red-500, $yellow-500);
+	}
+}
+
+input {
+	&::placeholder {
+		font-family: 'Commissioner', sans-serif;
 	}
 }
 

@@ -1,8 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useAuth } from '../contexts/AuthContext';
 
 export default function Navbar() {
+	const { currentUser } = useAuth();
+
 	return (
 		<div className="container">
 			<nav className="nav flex flex-jc-sb flex-ai-c">
@@ -19,7 +22,7 @@ export default function Navbar() {
 						<motion.li
 							whileHover={{ scale: 1.1, transition: { duration: 0.3 } }}
 						>
-							<Link to="/promptList" className="link">
+							<Link to="/promptlist" className="link">
 								Start Writing
 							</Link>
 						</motion.li>
@@ -40,12 +43,20 @@ export default function Navbar() {
 					</ul>
 				</div>
 				<div className="nav__user">
-					<Link to="/signup" className="signupLink link">
-						Sign Up
-					</Link>
-					<Link to="/login" className="loginLink link">
-						Login
-					</Link>
+					{!currentUser && (
+						<Link to="/signup" className="signupLink link">
+							Sign Up
+						</Link>
+					)}
+					{!currentUser ? (
+						<Link to="/login" className="loginLink link">
+							Login
+						</Link>
+					) : (
+						<Link to="/dashboard" className="loginLink link">
+							{currentUser.data.email}
+						</Link>
+					)}
 				</div>
 			</nav>
 		</div>

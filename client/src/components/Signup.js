@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import Layout from './Layout';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import signUpImg from '../images/undraw_sign_in.svg';
 
@@ -13,6 +13,8 @@ export default function Signup() {
 	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
 
+	const history = useHistory();
+
 	async function handleSubmit(e) {
 		e.preventDefault();
 		if (passwordRef.current.value !== confirmPasswordRef.current.value) {
@@ -21,17 +23,24 @@ export default function Signup() {
 		try {
 			setError('');
 			setLoading(true);
-			//await signUp(emailRef.current.value, passwordRef.current.value);
+			await signUp(emailRef.current.value, passwordRef.current.value);
 			setLoading(false);
+			history.push('/');
 		} catch (err) {
-			setError('Failed to create an account');
+			setError('Failed to create an account.');
 		}
 	}
 
 	return (
 		<Layout>
 			<div className="signUp flex flex-jc-sa flex-ai-c">
-				<img src={signUpImg} alt="signup" width="400" height="400" className="signUp__image"/>
+				<img
+					src={signUpImg}
+					alt="signup"
+					width="400"
+					height="400"
+					className="signUp__image"
+				/>
 				<div className="signUp__input flex flex-col flex-jc-c flex-ai-c">
 					<h1 className="">Create an account</h1>
 					{error && (
@@ -63,7 +72,7 @@ export default function Signup() {
 							disabled={loading}
 							className="btnSubmit"
 						>
-							Submit
+							{!loading ? 'Submit' : 'Loading'}
 						</button>
 					</form>
 					<Link to="/login" className="link">
