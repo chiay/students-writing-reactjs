@@ -23,7 +23,10 @@ export function AuthProvider({ children }) {
 				},
 				config
 			);
-			if (user) setCurrentUser(user);
+			if (user) {
+				setCurrentUser(user);
+				return user;
+			}
 			return;
 		} catch (err) {
 			console.log(err);
@@ -40,8 +43,10 @@ export function AuthProvider({ children }) {
 				},
 				config
 			);
-			if (user) setCurrentUser(user);
-			return;
+			if (user) {
+				setCurrentUser(user);
+				return user;
+			}
 		} catch (err) {
 			console.log(err);
 		}
@@ -49,9 +54,5 @@ export function AuthProvider({ children }) {
 
 	const value = { currentUser, signUp, login };
 
-	return (
-		<AuthContext.Provider value={value}>
-			{children}
-		</AuthContext.Provider>
-	);
+	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

@@ -3,6 +3,9 @@ const router = express.Router();
 const Prompt = require('../models/prompt');
 const User = require('../models/user');
 const { getUser, checkRole } = require('./middleware');
+const passport = require('passport');
+const userRole = require('../constants/userRole');
+
 /**
  * Get all prompts
  * @access public
@@ -36,37 +39,53 @@ router.get('/:id', async (req, res) => {
  * Create a new prompt
  * @access private
  */
-router.post('/create', getUser, checkRole, async (req, res) => {
-	try {
-		const tempPrompt = new Prompt({
-			title: req.body.title,
-			description: req.body.description,
-		});
-		const newPrompt = await tempPrompt.save();
-		res.status(200).json(newPrompt);
-	} catch (err) {
-		return res.status(500).json({ message: err.message });
+router.post(
+	'/create',
+	passport.authenticate('jwt', { session: false }),
+	async (req, res) => {
+		if (req.user.role !== userRole.ADMIN) {
+			return res.status(401).send('Access denied!');
+		}
+		try {
+			const tempPrompt = new Prompt({
+				title: req.body.title,
+				description: req.body.description,
+				type: req.body.type,
+			});
+			const newPrompt = await tempPrompt.save();
+			res.status(200).json(newPrompt);
+		} catch (err) {
+			return res.status(500).json({ message: err.message });
+		}
 	}
-});
+);
 
 /**
  * Edit prompt
  * @access private
  */
-router.patch('/:id/edit', getPrompt, async (req, res) => {
-	if (req.body.title != null) {
-		res.Prompt.title = req.body.title;
+router.patch(
+	'/:id/edit',
+	passport.authenticate('jwt', { session: false }),
+	getPrompt,
+	async (req, res) => {
+		if (req.user.role !== userRole.ADMIN) {
+			return res.status(401).send('Access denied!');
+		}
+		if (req.body.title != null) {
+			res.Prompt.title = req.body.title;
+		}
+		if (req.body.description != null) {
+			res.Prompt.description = req.body.description;
+		}
+		try {
+			const updatedPrompt = await res.Prompt.save();
+			res.status(200).json(updatedPrompt);
+		} catch (err) {
+			return res.status(400).json({ message: err.message });
+		}
 	}
-	if (req.body.description != null) {
-		res.Prompt.description = req.body.description;
-	}
-	try {
-		const updatedPrompt = await res.Prompt.save();
-		res.status(200).json(updatedPrompt);
-	} catch (err) {
-		return res.status(400).json({ message: err.message });
-	}
-});
+);
 
 /**
  * Delete prompt
@@ -74,10 +93,12 @@ router.patch('/:id/edit', getPrompt, async (req, res) => {
  */
 router.delete(
 	'/:id/delete',
+	passport.authenticate('jwt', { session: false }),
 	getPrompt,
-	getUser,
-	checkRole,
 	async (req, res) => {
+		if (req.user.role !== userRole.ADMIN) {
+			return res.status(401).send('Access denied!');
+		}
 		try {
 			await res.Prompt.remove();
 			res.status(200).json({ message: 'Prompt removed.' });

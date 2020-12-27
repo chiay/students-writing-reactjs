@@ -79,12 +79,20 @@ input {
 		justify-content: center;
 	}
 
+	&-jc-fe {
+		justify-content: flex-end;
+	}
+
 	&-ai-c {
 		align-items: center;
 	}
 
 	&-col {
 		flex-direction: column;
+	}
+
+	&-row {
+		flex-direction: row;
 	}
 }
 

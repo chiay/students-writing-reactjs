@@ -16,7 +16,7 @@ router.get(
 	passport.authenticate('jwt', { session: false }),
 	async (req, res) => {
 		if (req.user.role !== userRole.ADMIN) {
-			return res.status(401).send('Access denied!');
+			return res.status(403).send('Access denied!');
 		}
 		try {
 			const users = await User.find({}, { password: 0 });
@@ -34,7 +34,7 @@ router.get(
 router.post('/login', passport.authenticate('login'), (req, res) => {
 	if (req.user) {
 		const token = jwt.sign({ id: req.user._id }, process.env.JWT_SECRET);
-		return res.status(200).send({
+		res.status(200).send({
 			success: true,
 			token,
 			email: req.user.email,
@@ -71,7 +71,7 @@ router.post('/register', checkUser, async (req, res) => {
 		});
 		const newUser = await tempUser.save();
 		const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
-		return res.status(200).send({
+		res.status(200).send({
 			success: true,
 			token,
 			email: newUser.email,
@@ -95,14 +95,14 @@ router.patch(
 	getUser,
 	async (req, res) => {
 		if (req.user.role !== userRole.ADMIN) {
-			return res.status(401).send('Access denied!');
+			return res.status(403).send('Access denied!');
 		}
 		if (req.body.role != null) {
 			res.User.role = req.body.role;
 		}
 		try {
 			const updatedUser = await res.User.save();
-			return res.status(200).json({
+			res.status(200).json({
 				success: true,
 				email: updatedUser.email,
 				name: updatedUser.name,
@@ -110,7 +110,7 @@ router.patch(
 				role: updatedUser.role,
 			});
 		} catch (err) {
-			return res.status(400).json({ message: err.message });
+			return res.status(500).json({ message: err.message });
 		}
 	}
 );
@@ -146,7 +146,7 @@ router.patch(
 				role: updatedUser.role,
 			});
 		} catch (err) {
-			return res.status(400).json({ message: err.message });
+			return res.status(500).json({ message: err.message });
 		}
 	}
 );
@@ -161,11 +161,11 @@ router.delete(
 	getUser,
 	async (req, res) => {
 		if (req.user.role !== userRole.ADMIN) {
-			return res.status(401).send('Access denied!');
+			return res.status(403).send('Access denied!');
 		}
 		try {
 			await res.User.remove();
-			return res.status(200).json({ message: 'User removed.' });
+			res.status(200).json({ message: 'User removed.' });
 		} catch (err) {
 			return res.status(500).json({ message: err.message });
 		}

@@ -1,16 +1,18 @@
-import React, {useState, useRef} from 'react';
+import React, { useState, useRef } from 'react';
 import Layout from './Layout';
 import { Link, useHistory } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import useLocalStorage from '../hooks/useLocalStorage';
 import loginImg from '../images/undraw_my_password.svg';
 
-export default function Signup() {
+export default function Login() {
 	const emailRef = useRef();
 	const passwordRef = useRef();
 
 	const { login } = useAuth();
 	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
+	const [token, setToken] = useLocalStorage('token');
 
 	const history = useHistory();
 
@@ -19,8 +21,12 @@ export default function Signup() {
 		try {
 			setError('');
 			setLoading(true);
-			await login(emailRef.current.value, passwordRef.current.value);
+			const { data } = await login(
+				emailRef.current.value,
+				passwordRef.current.value
+			);
 			setLoading(false);
+			setToken(data.token);
 			history.push('/');
 		} catch (err) {
 			setError('Wrong email/password. Please try again.');
@@ -30,11 +36,8 @@ export default function Signup() {
 	return (
 		<Layout>
 			<div className="login flex flex-jc-sa flex-ai-c">
-				
 				<div className="login__input flex flex-col flex-jc-c flex-ai-c">
-					<h1 className="">
-						Welcome back!
-					</h1>
+					<h1 className="">Welcome back!</h1>
 					{error && (
 						<div className="error">
 							<label>{error}</label>
@@ -62,15 +65,15 @@ export default function Signup() {
 						</button>
 					</form>
 					<Link to="/signup" className="link">
-               Don't have an account? Sign Up
+						Don't have an account? Sign Up
 					</Link>
 				</div>
-            <img
+				<img
 					src={loginImg}
 					alt="signup"
 					width="400"
 					height="400"
-               className="login__image"
+					className="login__image"
 				/>
 			</div>
 		</Layout>

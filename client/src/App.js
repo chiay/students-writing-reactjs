@@ -6,6 +6,7 @@ import Login from './components/Login';
 import { AuthProvider } from './contexts/AuthContext';
 import Dashboard from './components/Dashboard';
 import PromptList from './components/PromptList';
+import PromptOverview from './components/PromptOverview';
 
 function App() {
 	return (
@@ -17,6 +18,7 @@ function App() {
 					<Route path="/login" component={Login} />
 					<Route path="/dashboard" component={Dashboard} />
 					<Route path="/promptlist" component={PromptList} />
+					<Route path="/promptoverview/:id" component={PromptOverview} />
 				</Switch>
 			</Router>
 		</AuthProvider>
