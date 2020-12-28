@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../contexts/AuthContext';
+import logo from '../images/logo.svg';
 
 export default function Navbar() {
 	const { currentUser } = useAuth();
@@ -10,7 +11,9 @@ export default function Navbar() {
 		<div className="container">
 			<nav className="nav flex flex-jc-sb flex-ai-c">
 				<div className="nav__logo flex flex-ai-c">
-					<div className="logo">Logo</div>
+					<div className="logo flex flex-jc-c flex-ai-c">
+						<img src={logo} alt="logo" width="30" height="30" />
+					</div>
 					<div className="title">
 						<Link to="/" className="text-lg link">
 							Students Writing

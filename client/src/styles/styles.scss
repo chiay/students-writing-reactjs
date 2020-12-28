@@ -8,7 +8,10 @@
 // Update Bulma's global variables
 //$family-sans-serif: 'Commissioner', sans-serif;
 
+//@import '../../node_modules/bulma/sass/components/modal.sass';
+
 @import 'globals';
+@import 'modal';
 
 @import 'nav';
 @import 'hero';

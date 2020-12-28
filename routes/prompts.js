@@ -12,7 +12,11 @@ const userRole = require('../constants/userRole');
  */
 router.get('/', async (req, res) => {
 	try {
-		const prompts = await Prompt.find({}, { posts: 0 });
+		const prompts = await Prompt.find(
+			{},
+			{ posts: 0 },
+			{ sort: { createdOn: -1 } }
+		);
 		res.status(200).json(prompts);
 	} catch (err) {
 		return res.status(500).json({ message: err.message });
@@ -27,7 +31,8 @@ router.get('/:id', async (req, res) => {
 	try {
 		const prompt = await Prompt.findById(req.params.id).populate(
 			'posts.postedBy',
-			'email' // Show only email
+			'email', // Show only email
+			'alias'
 		);
 		res.status(200).json(prompt);
 	} catch (err) {

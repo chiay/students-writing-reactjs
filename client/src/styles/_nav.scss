@@ -9,7 +9,10 @@
 
 	&__logo {
 		.logo {
-			margin-right: 0.75rem;
+			margin-right: 0.5rem;
+			background-color: #00000020;
+			border: none;
+			border-radius: 5px;
 		}
 		.title {
 			color: $yellow-300;

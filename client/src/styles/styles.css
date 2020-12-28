@@ -49,7 +49,7 @@ button {
   border: none;
   border-radius: 1rem;
   font-size: 0.875rem;
-  font-family: 'Commissioner', sans-serif;
+  font-family: inherit;
   color: white;
   cursor: pointer;
 }
@@ -60,19 +60,19 @@ button:hover {
 }
 
 input::-webkit-input-placeholder {
-  font-family: 'Commissioner', sans-serif;
+  font-family: inherit;
 }
 
 input:-ms-input-placeholder {
-  font-family: 'Commissioner', sans-serif;
+  font-family: inherit;
 }
 
 input::-ms-input-placeholder {
-  font-family: 'Commissioner', sans-serif;
+  font-family: inherit;
 }
 
 input::placeholder {
-  font-family: 'Commissioner', sans-serif;
+  font-family: inherit;
 }
 
 .container {
@@ -141,6 +141,37 @@ input::placeholder {
   }
 }
 
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: black;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal__body {
+  position: fixed;
+  background: white;
+  width: 80%;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  padding: 2rem;
+  border-radius: 1rem;
+}
+
+.display-block {
+  display: block;
+}
+
+.display-none {
+  display: none;
+}
+
 .nav {
   padding: 0rem 1.5rem;
   background: -webkit-gradient(linear, right top, left top, from(#EF4444), to(#EAB308));
@@ -153,7 +184,10 @@ input::placeholder {
 }
 
 .nav__logo .logo {
-  margin-right: 0.75rem;
+  margin-right: 0.5rem;
+  background-color: #00000020;
+  border: none;
+  border-radius: 5px;
 }
 
 .nav__logo .title {
@@ -324,6 +358,27 @@ input::placeholder {
   max-width: 70%;
   padding: 0 3rem;
   display: block;
+}
+
+.promptList .modal__content form {
+  width: 80%;
+}
+
+.promptList .modal__content form .formLabel {
+  padding: 0.5rem 0;
+}
+
+.promptList .modal__content form input,
+.promptList .modal__content form select {
+  padding: 0.5rem;
+  border: 1px solid #D4D4D8;
+  border-radius: 0.5rem;
+  font-family: inherit;
+}
+
+.promptList .modal__content form .buttonPanel button {
+  width: 20%;
+  margin: 1rem 1rem;
 }
 
 .prompt {

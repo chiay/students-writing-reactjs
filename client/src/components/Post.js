@@ -1,7 +1,6 @@
 import React from 'react';
 
 export default function Post({ userPost }) {
-	console.log(userPost);
 	return (
 		<div className="post">
 			<div className="post__metadata">

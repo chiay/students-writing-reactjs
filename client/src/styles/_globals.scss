@@ -45,7 +45,7 @@ button {
 	border: none;
 	border-radius: 1rem;
 	font-size: $text-sm;
-	font-family: 'Commissioner', sans-serif;
+	font-family: inherit;
 	color: white;
 	cursor: pointer;
 	&:hover {
@@ -55,7 +55,7 @@ button {
 
 input {
 	&::placeholder {
-		font-family: 'Commissioner', sans-serif;
+		font-family: inherit;
 	}
 }
 

@@ -25,11 +25,12 @@ export default function Login() {
 				emailRef.current.value,
 				passwordRef.current.value
 			);
-			setLoading(false);
 			setToken(data.token);
+			setLoading(false);
 			history.push('/');
 		} catch (err) {
 			setError('Wrong email/password. Please try again.');
+			setLoading(false);
 		}
 	}
 
