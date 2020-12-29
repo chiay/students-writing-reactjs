@@ -50,6 +50,31 @@ router.post('/login', passport.authenticate('login'), (req, res) => {
 });
 
 /**
+ * Verify a user via JWT
+ * @access public
+ */
+router.post(
+	'/verifyToken',
+	passport.authenticate('jwt', { session: false }),
+	(req, res) => {
+		if (req.user) {
+			res.status(200).send({
+				success: true,
+				token,
+				email: req.user.email,
+				name: req.user.name,
+				alias: req.user.alias,
+				role: req.user.role,
+			});
+		} else {
+			return res
+				.status(500)
+				.json({ success: false, message: 'Verification failed.' });
+		}
+	}
+);
+
+/**
  * Logout a user via passport
  * @access public
  */
