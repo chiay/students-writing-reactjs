@@ -57,7 +57,9 @@ export default function Navbar() {
 						</Link>
 					) : (
 						<Link to="/dashboard" className="loginLink link">
-							{currentUser.data.email}
+							{currentUser.data.alias
+								? currentUser.data.alias
+								: currentUser.data.email}
 						</Link>
 					)}
 				</div>

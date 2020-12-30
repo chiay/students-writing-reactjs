@@ -5,6 +5,7 @@ import Prompt from './Prompt';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import Modal from './Modal';
+import useLocalStorage from '../hooks/useLocalStorage';
 
 export default function PromptList() {
 	const [list, setList] = useState();
@@ -16,6 +17,7 @@ export default function PromptList() {
 		{ label: 'Essay', value: 'essay' },
 	]);
 	const [type, setType] = useState('sentence');
+	const [token] = useLocalStorage('token');
 
 	const { currentUser } = useAuth();
 
@@ -52,11 +54,11 @@ export default function PromptList() {
 
 	async function handleSubmit(e) {
 		e.preventDefault();
+		setLoading(true);
 		const config = {
 			headers: {
 				'Content-Type': 'application/json',
-				Authorization:
-					'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmZDIwMjM4ZjBkZDNkNWUyYzBmZjM4MCIsImlhdCI6MTYwODc5MzY2OH0.z1ULvziKwK3Rh9Lbrx_3uONxbkRT52EF2h7Rn90uwTM',
+				Authorization: `Bearer ${token}`,
 			},
 		};
 
@@ -77,6 +79,9 @@ export default function PromptList() {
 		} catch (err) {
 			console.log('Unable to fetch data from server.');
 		}
+
+		setLoading(false);
+		isModalOpen(false);
 	}
 
 	return (
@@ -93,17 +98,17 @@ export default function PromptList() {
 					</div>
 				)}
 
-				<Modal open={modalOpen} handleModalClose={handleModalClose}>
+				<Modal open={modalOpen}>
 					<div className="modal__content flex flex-jc-c">
 						<form
 							className="flex flex-col flex-jc-c"
 							onSubmit={handleSubmit}
 						>
-							<label className="formLabel">Title</label>
+							<label className="formLabel">Title*</label>
 							<input type="text" required ref={titleRef} />
 							<label className="formLabel">Description</label>
 							<input type="text" ref={descriptionRef} />
-							<label className="formLabel">Type</label>
+							<label className="formLabel">Type*</label>
 							<select onChange={(e) => handleChange(e)}>
 								{types.map((type) => (
 									<option key={type.value} value={type.value}>
@@ -118,7 +123,9 @@ export default function PromptList() {
 								>
 									Close
 								</button>
-								<button type="submit">Submit</button>
+								<button type="submit" disabled={loading}>
+									Submit
+								</button>
 							</div>
 						</form>
 					</div>
@@ -137,7 +144,7 @@ export default function PromptList() {
 						);
 					})
 				) : (
-					<label>No content.</label>
+					<label className="promptList__noContent">No content.</label>
 				)}
 			</div>
 		</Layout>

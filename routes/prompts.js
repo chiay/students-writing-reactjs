@@ -140,7 +140,7 @@ router.patch('/:id/post', getPrompt, getUser, async (req, res) => {
  */
 router.patch('/:id/delete/:pid', getPrompt, async (req, res) => {
 	const filteredPost = res.Prompt.posts.filter((post) => {
-		return post._id == req.params.pid;
+		return post._id != req.params.pid;
 	});
 	res.Prompt.posts = filteredPost;
 	try {

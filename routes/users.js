@@ -11,7 +11,7 @@ const userRole = require('../constants/userRole');
  * Get all users
  * @access private
  */
-router.get(
+router.post(
 	'/',
 	passport.authenticate('jwt', { session: false }),
 	async (req, res) => {
@@ -60,7 +60,6 @@ router.post(
 		if (req.user) {
 			res.status(200).send({
 				success: true,
-				token,
 				email: req.user.email,
 				name: req.user.name,
 				alias: req.user.alias,

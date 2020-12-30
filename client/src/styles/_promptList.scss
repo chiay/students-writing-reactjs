@@ -3,6 +3,11 @@
 	padding: 0 3rem;
 	display: block;
 
+	&__noContent {
+		padding: 2rem;
+		text-align: center;
+	}
+
 	.modal {
 		&__content {
 			form {

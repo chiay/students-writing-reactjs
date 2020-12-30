@@ -360,6 +360,11 @@ input::placeholder {
   display: block;
 }
 
+.promptList__noContent {
+  padding: 2rem;
+  text-align: center;
+}
+
 .promptList .modal__content form {
   width: 80%;
 }
@@ -388,13 +393,23 @@ input::placeholder {
   border-radius: 1.5rem;
 }
 
-.prompt__main .title {
-  margin-right: 1rem;
-}
-
 .prompt__main .metadata {
   font-size: 0.75rem;
   color: #A1A1AA;
+}
+
+.prompt__main .metadata .type {
+  margin-right: 0.5rem;
+}
+
+.prompt__main .metadata .datetime {
+  margin-left: 0.5rem;
+}
+
+.prompt__description {
+  font-size: 0.875rem;
+  color: #A1A1AA;
+  line-height: 1.5;
 }
 
 .overview {
@@ -444,6 +459,15 @@ input::placeholder {
   margin: 0 0.5rem;
 }
 
+.overview .modal__content label {
+  text-align: center;
+}
+
+.overview .modal__content button {
+  width: 20%;
+  margin: 1rem 1rem;
+}
+
 .overview__posts .pendingMsg {
   padding: 1rem;
   font-size: 1.25rem;
@@ -462,6 +486,12 @@ input::placeholder {
 
 .overview__panel form {
   width: 100%;
+  padding: 2rem 1rem;
+  background: #E4E4E7;
+  border: none;
+  border-radius: 1rem;
+  -webkit-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.1);
+          box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.1);
 }
 
 .overview__panel form .panelInput {
@@ -470,10 +500,11 @@ input::placeholder {
   height: 30vh;
   max-height: 50vh;
   padding: 1rem;
-  border: 1px solid #D4D4D8;
+  border: none;
   border-radius: 1rem;
-  font-size: 1.125rem;
+  font-size: 1.25rem;
   line-height: 1.5;
+  background: #fefefe99;
   -webkit-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.1);
           box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.1);
 }
@@ -500,7 +531,7 @@ input::placeholder {
 
 .overview__panel form .btnSubmitAnswer {
   width: 10vw;
-  margin: 1.5rem;
+  margin-top: 1rem;
 }
 
 .post {
@@ -526,5 +557,14 @@ input::placeholder {
 
 .post__control :not(:last-child) {
   margin-right: 0.5rem;
+}
+
+.post .modal__content label {
+  text-align: center;
+}
+
+.post .modal__content button {
+  width: 20%;
+  margin: 1rem 1rem;
 }
 /*# sourceMappingURL=styles.css.map */

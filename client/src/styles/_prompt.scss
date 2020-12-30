@@ -1,16 +1,25 @@
 .prompt {
-   padding: 1rem 2rem;
-   margin: 1rem;
-   border: 1px solid $yellow-500;
-   border-radius: 1.5rem;
+	padding: 1rem 2rem;
+	margin: 1rem;
+	border: 1px solid $yellow-500;
+	border-radius: 1.5rem;
 
-   &__main {
-      .title {
-         margin-right: 1rem;
-      }
-      .metadata {
-         font-size: $text-xs;
-         color: $gray-400;
-      }
-   }
+	&__main {
+		.metadata {
+			font-size: $text-xs;
+			color: $gray-400;
+			.type {
+				margin-right: 0.5rem;
+			}
+			.datetime {
+				margin-left: 0.5rem;
+			}
+		}
+	}
+
+	&__description {
+		font-size: $text-sm;
+		color: $gray-400;
+		line-height: 1.5;
+	}
 }

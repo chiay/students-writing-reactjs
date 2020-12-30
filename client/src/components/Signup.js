@@ -18,7 +18,10 @@ export default function Signup() {
 	async function handleSubmit(e) {
 		e.preventDefault();
 		if (passwordRef.current.value !== confirmPasswordRef.current.value) {
-			return setError('Passwords do not match');
+			return setError('Passwords do not match.');
+		}
+		if (passwordRef.current.value.length <= 8) {
+			return setError('Password length must be longer than 8.');
 		}
 		try {
 			setError('');

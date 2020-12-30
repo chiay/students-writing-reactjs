@@ -10,7 +10,7 @@ export default function Hero() {
 
 	function handleClick() {
 		if (currentUser) {
-			history.push('/promptlist')
+			history.push('/promptlist');
 		} else {
 			history.push('/signup');
 		}
@@ -18,7 +18,12 @@ export default function Hero() {
 
 	return (
 		<div className="hero container flex flex-jc-sa flex-ai-c">
-			<div className="hero__text">
+			<motion.div
+				className="hero__text"
+				initial={{ opacity: 0, y: 20 }}
+				animate={{ opacity: 1, y: 0 }}
+				transition={{ duration: 0.5, delay: 0.2 }}
+			>
 				<h1>Welcome to Students Writing!</h1>
 
 				<h3 className="subtitle">
@@ -34,13 +39,16 @@ export default function Hero() {
 				>
 					Get Started
 				</motion.button>
-			</div>
-			<img
+			</motion.div>
+			<motion.img
 				src={publishArticleImg}
 				alt="write"
 				width="300"
 				height="300"
 				className="hero__image"
+				initial={{ opacity: 0, y: 20 }}
+				animate={{ opacity: 1, y: 0 }}
+				transition={{ duration: 0.5, delay: 0.2 }}
 			/>
 		</div>
 	);

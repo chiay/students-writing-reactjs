@@ -23,4 +23,16 @@
 			margin-right: 0.5rem;
 		}
 	}
+
+	.modal {
+		&__content {
+			label {
+				text-align: center;
+			}
+			button {
+				width: 20%;
+				margin: 1rem 1rem;
+			}
+		}
+	}
 }

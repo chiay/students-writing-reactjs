@@ -1,20 +1,30 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Layout from './Layout';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import Post from './Post';
+import Modal from './Modal';
+import useLocalStorage from '../hooks/useLocalStorage';
 
 export default function PromptOverview() {
 	const [prompt, setCurrentPrompt] = useState();
-	const [postList, setPostList] = useState();
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState('');
+	const [modalOpen, isModalOpen] = useState(false);
+	const [modalMessage, setModalMessage] = useState('');
+	const [token] = useLocalStorage('token');
 	const textRef = useRef();
 	const { id } = useParams();
-
 	const { currentUser } = useAuth();
+	const history = useHistory();
+	const config = {
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: `Bearer ${token}`,
+		},
+	};
 
 	useEffect(() => {
 		setLoading(true);
@@ -26,7 +36,6 @@ export default function PromptOverview() {
 					cancelToken: new axios.CancelToken((c) => (cancel = c)),
 				});
 				setCurrentPrompt(data);
-				setPostList(data.posts);
 			} catch (err) {
 				console.log('Unable to fetch data from server.');
 			}
@@ -40,10 +49,8 @@ export default function PromptOverview() {
 	async function handleSubmit(e) {
 		e.preventDefault();
 		if (textRef.current.value.length <= 4) {
-			setError('The minimum words is 4.');
-			return;
+			return setError('The minimum words is 4.');
 		}
-		const config = { headers: { 'Content-Type': 'application/json' } };
 
 		setLoading(true);
 
@@ -63,6 +70,33 @@ export default function PromptOverview() {
 		window.location.replace(`/promptoverview/${id}`);
 	}
 
+	function handleModalClose() {
+		isModalOpen(false);
+		setModalMessage('');
+	}
+
+	function handleDeleteButton() {
+		isModalOpen(true);
+		setModalMessage('Are you sure you want to delete this prompt?');
+	}
+
+	async function handlePromptDelete() {
+		setLoading(true);
+
+		try {
+			setError('');
+			await axios.delete(`/api/prompt/${id}/delete`, config);
+			history.goBack();
+			return;
+		} catch (err) {
+			console.log(err, 'Unable to delete prompt.');
+			setError('Unable to delete this prompt. Please try again later.');
+		}
+
+		setLoading(false);
+		handleModalClose();
+	}
+
 	return (
 		<Layout>
 			{!loading && prompt && (
@@ -75,9 +109,28 @@ export default function PromptOverview() {
 					{currentUser && (
 						<div className="overview__admin">
 							<button type="button">Edit</button>
-							<button type="button">Delete</button>
+							<button type="button" onClick={handleDeleteButton}>
+								Delete
+							</button>
 						</div>
 					)}
+					<Modal open={modalOpen}>
+						<div className="modal__content flex flex-col flex-jc-c">
+							<label>{modalMessage}</label>
+							<div className="modal__content flex flex-jc-c">
+								<button type="button" onClick={handleModalClose}>
+									No
+								</button>
+								<button
+									type="button"
+									onClick={handlePromptDelete}
+									disabled={loading}
+								>
+									Yes
+								</button>
+							</div>
+						</div>
+					</Modal>
 					<h1 className="overview__title">{prompt.title}</h1>
 					<label className="overview__metadata">
 						<span className="type">{prompt.type}</span> |
@@ -90,19 +143,21 @@ export default function PromptOverview() {
 					</p>
 
 					<div className="overview__posts">
-						{postList ? (
-							postList.map((userPost) => {
+						{prompt.posts.length > 0 ? (
+							prompt.posts.map((userPost) => {
 								return (
 									<Post
 										key={userPost._id}
 										userPost={userPost}
 										currentUser={currentUser}
+										setError={setError}
+										id={id}
 									/>
 								);
 							})
 						) : (
 							<i className="pendingMsg">
-								---Still waiting for an answer...---
+								---Still waiting for an answer---
 							</i>
 						)}
 					</div>

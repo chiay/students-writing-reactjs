@@ -1,5 +1,6 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
+import useLocalStorage from '../hooks/useLocalStorage';
 
 const AuthContext = React.createContext();
 
@@ -9,9 +10,34 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
 	const [currentUser, setCurrentUser] = useState();
-	//const [token, setToken] = useLocalStorage('token');
+	const [loading, setLoading] = useState(false);
+	const [token, setToken] = useLocalStorage('token');
 
 	const config = { headers: { 'Content-Type': 'application/json' } };
+
+	useEffect(() => {
+		setLoading(true);
+		const verifyUser = async () => {
+			const loggedInUser = token;
+			try {
+				if (loggedInUser) {
+					const user = await axios.post(
+						'/api/user/verifyToken',
+						{},
+						{ headers: { Authorization: `Bearer ${token}` } }
+					);
+					if (user) {
+						setCurrentUser(user);
+					}
+				}
+			} catch (err) {
+				console.log(err);
+			}
+		};
+
+		verifyUser();
+		setLoading(false);
+	}, []);
 
 	async function signUp(email, password) {
 		try {
@@ -27,7 +53,6 @@ export function AuthProvider({ children }) {
 				setCurrentUser(user);
 				return user;
 			}
-			return;
 		} catch (err) {
 			console.log(err);
 		}
@@ -52,7 +77,16 @@ export function AuthProvider({ children }) {
 		}
 	}
 
-	const value = { currentUser, signUp, login };
+	function logout() {
+		setCurrentUser(null);
+		setToken(null);
+	}
 
-	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+	const value = { currentUser, signUp, login, logout };
+
+	return (
+		<AuthContext.Provider value={value}>
+			{!loading && children}
+		</AuthContext.Provider>
+	);
 }
