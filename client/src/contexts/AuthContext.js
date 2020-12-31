@@ -18,13 +18,17 @@ export function AuthProvider({ children }) {
 	useEffect(() => {
 		setLoading(true);
 		const verifyUser = async () => {
-			const loggedInUser = token;
+			const loggedInUser = localStorage.getItem('students-writing-token');
 			try {
 				if (loggedInUser) {
 					const user = await axios.post(
 						'/api/user/verifyToken',
 						{},
-						{ headers: { Authorization: `Bearer ${token}` } }
+						{
+							headers: {
+								Authorization: `Bearer ${token}`,
+							},
+						}
 					);
 					if (user) {
 						setCurrentUser(user);
@@ -34,7 +38,6 @@ export function AuthProvider({ children }) {
 				console.log(err);
 			}
 		};
-
 		verifyUser();
 		setLoading(false);
 	}, []);
@@ -51,7 +54,7 @@ export function AuthProvider({ children }) {
 			);
 			if (user) {
 				setCurrentUser(user);
-				return user;
+				setToken(user.data.token);
 			}
 		} catch (err) {
 			console.log(err);
@@ -70,7 +73,7 @@ export function AuthProvider({ children }) {
 			);
 			if (user) {
 				setCurrentUser(user);
-				return user;
+				setToken(user.data.token);
 			}
 		} catch (err) {
 			console.log(err);
@@ -78,8 +81,10 @@ export function AuthProvider({ children }) {
 	}
 
 	function logout() {
+		setLoading(true);
 		setCurrentUser(null);
-		setToken(null);
+		localStorage.clear();
+		setLoading(false);
 	}
 
 	const value = { currentUser, signUp, login, logout };

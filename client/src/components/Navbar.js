@@ -5,7 +5,7 @@ import { useAuth } from '../contexts/AuthContext';
 import logo from '../images/logo.svg';
 
 export default function Navbar() {
-	const { currentUser } = useAuth();
+	const { currentUser, logout } = useAuth();
 
 	return (
 		<div className="container">
@@ -36,13 +36,13 @@ export default function Navbar() {
 								About
 							</Link>
 						</motion.li>
-						<motion.li
+						{/* <motion.li
 							whileHover={{ scale: 1.1, transition: { duration: 0.3 } }}
 						>
 							<Link to="/contact" className="link">
 								Contact Us
 							</Link>
-						</motion.li>
+						</motion.li> */}
 					</ul>
 				</div>
 				<div className="nav__user">
@@ -56,11 +56,16 @@ export default function Navbar() {
 							Login
 						</Link>
 					) : (
-						<Link to="/dashboard" className="loginLink link">
-							{currentUser.data.alias
-								? currentUser.data.alias
-								: currentUser.data.email}
-						</Link>
+						<>
+							<Link to="/dashboard" className="loginLink link">
+								{currentUser.data.alias
+									? currentUser.data.alias
+									: currentUser.data.email}
+							</Link>
+							<Link to="/" className="logoutLink link" onClick={logout}>
+								Log Out
+							</Link>
+						</>
 					)}
 				</div>
 			</nav>

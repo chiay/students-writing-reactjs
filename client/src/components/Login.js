@@ -1,20 +1,23 @@
 import React, { useState, useRef } from 'react';
 import Layout from './Layout';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, Redirect, useHistory } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import useLocalStorage from '../hooks/useLocalStorage';
 import loginImg from '../images/undraw_my_password.svg';
 
 export default function Login() {
+	const { currentUser, login } = useAuth();
 	const emailRef = useRef();
 	const passwordRef = useRef();
-
-	const { login } = useAuth();
 	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
 	const [token, setToken] = useLocalStorage('token');
 
 	const history = useHistory();
+
+	if (currentUser) {
+		return <Redirect to="/" />;
+	}
 
 	async function handleSubmit(e) {
 		e.preventDefault();

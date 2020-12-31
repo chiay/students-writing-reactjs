@@ -116,40 +116,50 @@ router.delete(
  * Post answer
  * @access public
  */
-router.patch('/:id/post', getPrompt, getUser, async (req, res) => {
-	const post = { postedBy: res.User._id, text: req.body.text };
+router.patch(
+	'/:id/post',
+	passport.authenticate('jwt', { session: false }),
+	getPrompt,
+	async (req, res) => {
+		const post = { postedBy: req.user._id, text: req.body.text };
 
-	const tempPosts = [...res.Prompt.posts, post];
-	res.Prompt.posts = tempPosts;
+		const tempPosts = [...res.Prompt.posts, post];
+		res.Prompt.posts = tempPosts;
 
-	try {
-		const tempPrompt = await res.Prompt.save();
-		const updatedPrompt = await tempPrompt
-			.populate('posts.postedBy', { email: 1, alias: 1 })
-			.execPopulate();
+		try {
+			const tempPrompt = await res.Prompt.save();
+			const updatedPrompt = await tempPrompt
+				.populate('posts.postedBy', { email: 1, alias: 1 })
+				.execPopulate();
 
-		res.status(200).json(updatedPrompt);
-	} catch (err) {
-		return res.status(500).json({ message: err.message });
+			res.status(200).json(updatedPrompt);
+		} catch (err) {
+			return res.status(500).json({ message: err.message });
+		}
 	}
-});
+);
 
 /**
  * Delete answer
  * @access public
  */
-router.patch('/:id/delete/:pid', getPrompt, async (req, res) => {
-	const filteredPost = res.Prompt.posts.filter((post) => {
-		return post._id != req.params.pid;
-	});
-	res.Prompt.posts = filteredPost;
-	try {
-		const updatedPrompt = await res.Prompt.save();
-		res.status(200).json(updatedPrompt);
-	} catch (err) {
-		return res.status(500).json({ message: err.message });
+router.patch(
+	'/:id/delete/:pid',
+	passport.authenticate('jwt', { session: false }),
+	getPrompt,
+	async (req, res) => {
+		const filteredPost = res.Prompt.posts.filter((post) => {
+			return post._id != req.params.pid;
+		});
+		res.Prompt.posts = filteredPost;
+		try {
+			const updatedPrompt = await res.Prompt.save();
+			res.status(200).json(updatedPrompt);
+		} catch (err) {
+			return res.status(500).json({ message: err.message });
+		}
 	}
-});
+);
 
 /**
  * Get a particular prompt middleware

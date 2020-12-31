@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import Layout from './Layout';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, Redirect } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import signUpImg from '../images/undraw_sign_in.svg';
 
@@ -8,12 +8,14 @@ export default function Signup() {
 	const emailRef = useRef();
 	const passwordRef = useRef();
 	const confirmPasswordRef = useRef();
-
-	const { signUp } = useAuth();
+	const { currentUser, signUp } = useAuth();
 	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
-
 	const history = useHistory();
+
+	if (currentUser) {
+		return <Redirect to="/" />;
+	}
 
 	async function handleSubmit(e) {
 		e.preventDefault();

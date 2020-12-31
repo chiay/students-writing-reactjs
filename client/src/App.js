@@ -7,6 +7,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import Dashboard from './components/Dashboard';
 import PromptList from './components/PromptList';
 import PromptOverview from './components/PromptOverview';
+import PrivateRoute from './components/PrivateRoute';
 
 function App() {
 	return (
@@ -16,7 +17,7 @@ function App() {
 					<Route path="/" component={Home} exact />
 					<Route path="/signup" component={Signup} />
 					<Route path="/login" component={Login} />
-					<Route path="/dashboard" component={Dashboard} />
+					<PrivateRoute path="/dashboard" component={Dashboard} />
 					<Route path="/promptlist" component={PromptList} />
 					<Route path="/promptoverview/:id" component={PromptOverview} />
 				</Switch>

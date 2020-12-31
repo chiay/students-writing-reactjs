@@ -7,13 +7,14 @@ import { useAuth } from '../contexts/AuthContext';
 import Post from './Post';
 import Modal from './Modal';
 import useLocalStorage from '../hooks/useLocalStorage';
+import PromptEdit from './PromptEdit';
 
 export default function PromptOverview() {
 	const [prompt, setCurrentPrompt] = useState();
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState('');
-	const [modalOpen, isModalOpen] = useState(false);
-	const [modalMessage, setModalMessage] = useState('');
+	const [deleteModalOpen, isDeleteModalOpen] = useState(false);
+	const [editModalOpen, isEditModalOpen] = useState(false);
 	const [token] = useLocalStorage('token');
 	const textRef = useRef();
 	const { id } = useParams();
@@ -48,6 +49,7 @@ export default function PromptOverview() {
 
 	async function handleSubmit(e) {
 		e.preventDefault();
+
 		if (textRef.current.value.length <= 4) {
 			return setError('The minimum words is 4.');
 		}
@@ -58,7 +60,7 @@ export default function PromptOverview() {
 			setError('');
 			await axios.patch(
 				`/api/prompt/${id}/post`,
-				{ email: currentUser.data.email, text: textRef.current.value },
+				{ text: textRef.current.value },
 				config
 			);
 		} catch (err) {
@@ -70,14 +72,20 @@ export default function PromptOverview() {
 		window.location.replace(`/promptoverview/${id}`);
 	}
 
-	function handleModalClose() {
-		isModalOpen(false);
-		setModalMessage('');
+	function handleDeleteModalClose() {
+		isDeleteModalOpen(false);
 	}
 
-	function handleDeleteButton() {
-		isModalOpen(true);
-		setModalMessage('Are you sure you want to delete this prompt?');
+	function handleDeleteModalOpen() {
+		isDeleteModalOpen(true);
+	}
+
+	function handleEditModalClose() {
+		isEditModalOpen(false);
+	}
+
+	function handleEditModalOpen() {
+		isEditModalOpen(true);
 	}
 
 	async function handlePromptDelete() {
@@ -94,7 +102,7 @@ export default function PromptOverview() {
 		}
 
 		setLoading(false);
-		handleModalClose();
+		handleDeleteModalClose();
 	}
 
 	return (
@@ -106,19 +114,21 @@ export default function PromptOverview() {
 							<label>{error}</label>
 						</div>
 					)}
-					{currentUser && (
+					{currentUser && currentUser.data.role === 'admin' && (
 						<div className="overview__admin">
-							<button type="button">Edit</button>
-							<button type="button" onClick={handleDeleteButton}>
+							{/* <button type="button" onClick={handleEditModalOpen}>
+								Edit
+							</button> */}
+							<button type="button" onClick={handleDeleteModalOpen}>
 								Delete
 							</button>
 						</div>
 					)}
-					<Modal open={modalOpen}>
+					<Modal open={deleteModalOpen}>
 						<div className="modal__content flex flex-col flex-jc-c">
-							<label>{modalMessage}</label>
+							<label>Are you sure you want to delete this prompt?</label>
 							<div className="modal__content flex flex-jc-c">
-								<button type="button" onClick={handleModalClose}>
+								<button type="button" onClick={handleDeleteModalClose}>
 									No
 								</button>
 								<button
@@ -130,6 +140,14 @@ export default function PromptOverview() {
 								</button>
 							</div>
 						</div>
+					</Modal>
+					<Modal open={editModalOpen}>
+						<PromptEdit
+							control="edit"
+							prompt={prompt}
+							loading={loading}
+							handleModalClose={handleEditModalClose}
+						/>
 					</Modal>
 					<h1 className="overview__title">{prompt.title}</h1>
 					<label className="overview__metadata">

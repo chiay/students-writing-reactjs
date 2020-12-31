@@ -75,6 +75,8 @@ export default function PromptList() {
 
 			if (data) {
 				setList([data, ...list]);
+				titleRef.current.value = '';
+				descriptionRef.current.value = '';
 			}
 		} catch (err) {
 			console.log('Unable to fetch data from server.');

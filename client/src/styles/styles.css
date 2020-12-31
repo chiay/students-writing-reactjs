@@ -231,6 +231,15 @@ input::placeholder {
   background: linear-gradient(180deg, #FACC15, #FEF08A);
 }
 
+.nav__user .logoutLink {
+  color: #FACC15;
+  margin-left: 1rem;
+}
+
+.nav__user .logoutLink:hover {
+  color: #CA8A04;
+}
+
 .hero {
   width: 100%;
   min-height: 70vh;
@@ -564,6 +573,63 @@ input::placeholder {
 }
 
 .post .modal__content button {
+  width: 20%;
+  margin: 1rem 1rem;
+}
+
+.post .modal__content .panelInput {
+  width: 100%;
+  max-width: 100%;
+  height: 30vh;
+  max-height: 50vh;
+  padding: 1rem;
+  border: none;
+  border-radius: 1rem;
+  font-size: 1.25rem;
+  line-height: 1.5;
+  background: #fefefe99;
+  -webkit-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.1);
+          box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.1);
+}
+
+.post .modal__content .panelInput::-webkit-input-placeholder {
+  font-family: inherit;
+}
+
+.post .modal__content .panelInput:-ms-input-placeholder {
+  font-family: inherit;
+}
+
+.post .modal__content .panelInput::-ms-input-placeholder {
+  font-family: inherit;
+}
+
+.post .modal__content .panelInput::placeholder {
+  font-family: inherit;
+}
+
+.post .modal__content .panelInput:focus {
+  outline: none;
+}
+
+.modal__content form {
+  width: 80%;
+}
+
+.modal__content form .formLabel {
+  text-align: left;
+  padding: 0.5rem 0;
+}
+
+.modal__content form input,
+.modal__content form select {
+  padding: 0.5rem;
+  border: 1px solid #D4D4D8;
+  border-radius: 0.5rem;
+  font-family: inherit;
+}
+
+.modal__content form .buttonPanel button {
   width: 20%;
   margin: 1rem 1rem;
 }
