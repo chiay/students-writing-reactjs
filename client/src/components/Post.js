@@ -11,7 +11,7 @@ export default function Post({ userPost, currentUser, setError, id }) {
 	const [deleteModalOpen, isDeleteModalOpen] = useState(false);
 	// const [editModalOpen, isEditModalOpen] = useState(false);
 	// const textRef = useRef();
-	const [token] = useLocalStorage('token');
+	const [token] = useLocalStorage('token', '');
 
 	const config = {
 		headers: {

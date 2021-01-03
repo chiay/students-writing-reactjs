@@ -15,7 +15,7 @@ export default function PromptOverview() {
 	const [error, setError] = useState('');
 	const [deleteModalOpen, isDeleteModalOpen] = useState(false);
 	const [editModalOpen, isEditModalOpen] = useState(false);
-	const [token] = useLocalStorage('token');
+	const [token] = useLocalStorage('token', '');
 	const textRef = useRef();
 	const { id } = useParams();
 	const { currentUser } = useAuth();

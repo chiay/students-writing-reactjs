@@ -17,7 +17,7 @@ export default function PromptList() {
 		{ label: 'Essay', value: 'essay' },
 	]);
 	const [type, setType] = useState('sentence');
-	const [token] = useLocalStorage('token');
+	const [token] = useLocalStorage('token', '');
 
 	const { currentUser } = useAuth();
 
