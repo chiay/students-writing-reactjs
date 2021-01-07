@@ -148,8 +148,11 @@ router.patch(
 	'/updateProfile',
 	passport.authenticate('jwt', { session: false }),
 	async (req, res) => {
-		if (req.body.newEmail != null) {
-			req.user.email = req.body.newEmail;
+		if (req.body.email != null) {
+			req.user.email = req.body.email;
+		}
+		if (req.body.password != null) {
+			req.user.password = req.body.password;
 		}
 		if (req.body.name.firstName != null) {
 			req.user.name.firstName = req.body.name.firstName;
@@ -160,6 +163,9 @@ router.patch(
 		if (req.body.alias != null) {
 			req.user.alias = req.body.alias;
 		}
+		if (req.body.grade != null) {
+			req.user.grade = req.body.grade;
+		}
 		try {
 			const updatedUser = await req.user.save();
 			res.status(200).json({
@@ -168,6 +174,7 @@ router.patch(
 				name: updatedUser.name,
 				alias: updatedUser.alias,
 				role: updatedUser.role,
+				grade: updatedUser.grade,
 			});
 		} catch (err) {
 			return res.status(500).json({ message: err.message });

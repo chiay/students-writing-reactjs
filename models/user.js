@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
 		required: true,
 	},
 	alias: {
-		type: String
+		type: String,
 	},
 	name: {
 		firstName: {
@@ -20,6 +20,9 @@ const userSchema = new mongoose.Schema({
 		lastName: {
 			type: String,
 		},
+	},
+	grade: {
+		type: String,
 	},
 	role: {
 		type: String,
