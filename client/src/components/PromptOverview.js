@@ -6,8 +6,7 @@ import { useParams } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import Post from './Post';
 import Modal from './Modal';
-import useLocalStorage from '../hooks/useLocalStorage';
-import PromptEdit from './PromptEdit';
+import PromptEntryForm from './PromptEntryForm';
 
 export default function PromptOverview() {
 	const [prompt, setCurrentPrompt] = useState();
@@ -15,10 +14,9 @@ export default function PromptOverview() {
 	const [error, setError] = useState('');
 	const [deleteModalOpen, isDeleteModalOpen] = useState(false);
 	const [editModalOpen, isEditModalOpen] = useState(false);
-	const [token] = useLocalStorage('token', '');
 	const textRef = useRef();
 	const { id } = useParams();
-	const { currentUser } = useAuth();
+	const { currentUser, token } = useAuth();
 	const history = useHistory();
 	const config = {
 		headers: {
@@ -80,10 +78,6 @@ export default function PromptOverview() {
 		isDeleteModalOpen(true);
 	}
 
-	function handleEditModalClose() {
-		isEditModalOpen(false);
-	}
-
 	function handleEditModalOpen() {
 		isEditModalOpen(true);
 	}
@@ -116,9 +110,9 @@ export default function PromptOverview() {
 					)}
 					{currentUser && currentUser.data.role === 'admin' && (
 						<div className="overview__admin">
-							{/* <button type="button" onClick={handleEditModalOpen}>
+							<button type="button" onClick={handleEditModalOpen}>
 								Edit
-							</button> */}
+							</button>
 							<button type="button" onClick={handleDeleteModalOpen}>
 								Delete
 							</button>
@@ -142,11 +136,9 @@ export default function PromptOverview() {
 						</div>
 					</Modal>
 					<Modal open={editModalOpen}>
-						<PromptEdit
-							control="edit"
+						<PromptEntryForm
 							prompt={prompt}
-							loading={loading}
-							handleModalClose={handleEditModalClose}
+							setModalOpen={isEditModalOpen}
 						/>
 					</Modal>
 					<h1 className="overview__title">{prompt.title}</h1>

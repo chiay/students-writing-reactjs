@@ -41,6 +41,7 @@ router.post('/login', passport.authenticate('login'), (req, res) => {
 			name: req.user.name,
 			alias: req.user.alias,
 			role: req.user.role,
+			grade: req.user.grade,
 		});
 	} else {
 		return res
@@ -64,6 +65,7 @@ router.post(
 				name: req.user.name,
 				alias: req.user.alias,
 				role: req.user.role,
+				grade: req.user.grade,
 			});
 		} else {
 			return res
@@ -102,6 +104,7 @@ router.post('/register', checkUser, async (req, res) => {
 			name: newUser.name,
 			alias: newUser.alias,
 			role: newUser.role,
+			grade: req.user.grade,
 		});
 	} catch (err) {
 		return res.status(500).json({ message: err.message });
@@ -132,6 +135,7 @@ router.patch(
 				name: updatedUser.name,
 				alias: updatedUser.alias,
 				role: updatedUser.role,
+				grade: req.user.grade,
 			});
 		} catch (err) {
 			return res.status(500).json({ message: err.message });
@@ -148,10 +152,7 @@ router.patch(
 	'/updateProfile',
 	passport.authenticate('jwt', { session: false }),
 	async (req, res) => {
-		if (req.body.email != null) {
-			req.user.email = req.body.email;
-		}
-		if (req.body.password != null) {
+		if (req.body.password.length > 8) {
 			req.user.password = req.body.password;
 		}
 		if (req.body.name.firstName != null) {

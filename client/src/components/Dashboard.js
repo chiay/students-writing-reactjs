@@ -1,74 +1,78 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import Layout from './Layout';
 import { useAuth } from '../contexts/AuthContext';
 import AdminSidebar from './AdminSidebar';
 import { motion } from 'framer-motion';
 import axios from 'axios';
-import useLocalStorage from '../hooks/useLocalStorage';
+import { useForm } from 'react-hook-form';
 
 export default function Dashboard() {
-	const [grade, setGrade] = useState('');
+	const { currentUser, token } = useAuth();
+	const { register, handleSubmit, errors } = useForm({
+		defaultValues: {
+			firstName: currentUser.data.name.firstName,
+			lastName: currentUser.data.name.lastName,
+			alias: currentUser.data.alias,
+			password: '',
+			confirmPassword: '',
+			grade: currentUser.data.grade,
+		},
+	});
+
 	const [error, setError] = useState('');
-	const [grades] = useState([
-		{ label: '', value: '' },
-		{ label: '3rd grade', value: '3rd' },
-		{ label: '4th grade', value: '4th' },
-		{ label: '5th grade', value: '5th' },
-		{ label: '6th grade', value: '6th' },
-		{ label: '7th grade', value: '7th' },
-		{ label: '8th grade', value: '8th' },
+	const grades = [
+		{ label: 'Please select one', value: '' },
+		{ label: '3rd grade', value: '3rd grade' },
+		{ label: '4th grade', value: '4th grade' },
+		{ label: '5th grade', value: '5th grade' },
+		{ label: '6th grade', value: '6th grade' },
+		{ label: '7th grade', value: '7th grade' },
+		{ label: '8th grade', value: '8th grade' },
 		{ label: 'other', value: 'other' },
-	]);
-	const emailRef = useRef();
-	const passwordRef = useRef();
-	const confirmPasswordRef = useRef();
-	const firstNameRef = useRef();
-	const lastNameRef = useRef();
-	const aliasRef = useRef();
+	];
 
-	const { currentUser } = useAuth();
-	const [token] = useLocalStorage('token', '');
-
-	function handleChange(e) {
-		setGrade(e.target.value);
-	}
-
-	async function handleSubmit() {
+	const editProfile = async (data) => {
 		const config = {
 			headers: {
 				'Content-Type': 'application/json',
 				Authorization: `Bearer ${token}`,
 			},
 		};
+		const {
+			firstName,
+			lastName,
+			alias,
+			password,
+			confirmPassword,
+			grade,
+		} = data;
 
-		if (passwordRef.current.value !== confirmPasswordRef.current.value) {
+		console.log(data);
+
+		if (password !== confirmPassword) {
 			return setError('Passwords do not match.');
-		}
-
-		if (passwordRef.current.value.length <= 8) {
-			return setError('Password length must be longer than 8.');
 		}
 
 		try {
 			setError('');
-			const user = await axios.patch(
+			await axios.patch(
 				'/api/user/updateProfile',
 				{
-					email: emailRef.current.value,
-					password: passwordRef.current.value,
+					password,
 					name: {
-						firstName: firstNameRef.current.value,
-						lastName: lastNameRef.current.value,
+						firstName,
+						lastName,
 					},
-					alias: aliasRef.current.value,
+					alias,
 					grade,
 				},
 				config
 			);
 		} catch (err) {
+			console.log('Unable to update profile');
 			setError('Unable to update your profile. Please try again later.');
 		}
-	}
+	};
 
 	return (
 		<Layout>
@@ -87,93 +91,96 @@ export default function Dashboard() {
 						</div>
 					)}
 					<h2 className="title">PROFILE</h2>
-					<table>
-						<tr>
-							<td>Email:</td>
-							<td>
-								<input
-									type="email"
-									disabled="true"
-									ref={emailRef}
-									value={currentUser.data.email}
-								/>
-							</td>
-						</tr>
-						<tr>
-							<td>First Name:</td>
-							<td>
-								<input
-									type="text"
-									ref={firstNameRef}
-									value={currentUser.data.name.firstName}
-								/>
-							</td>
-						</tr>
-						<tr>
-							<td>Last Name:</td>
-							<td>
-								<input
-									type="text"
-									ref={lastNameRef}
-									value={currentUser.data.name.lastName}
-								/>
-							</td>
-						</tr>
-						<tr>
-							<td>Alias: </td>
-							<td>
-								<input
-									type="text"
-									ref={aliasRef}
-									value={currentUser.data.alias}
-								/>
-							</td>
-						</tr>
-						<tr>
-							<td>Password:</td>
-							<td>
-								<input
-									type="password"
-									placeholder="Leave blank if unchanged"
-									ref={passwordRef}
-								/>
-							</td>
-						</tr>
-						<tr>
-							<td>Confirm password: </td>
-							<td>
-								<input
-									type="password"
-									placeholder="Leave blank if unchanged"
-									ref={confirmPasswordRef}
-								/>
-							</td>
-						</tr>
-						<tr>
-							<td>Role:</td>
-							<td>{currentUser.data.role}</td>
-						</tr>
-						<tr>
-							<td>Grade:</td>
-							<td>
-								<select onChange={(e) => handleChange(e)}>
-									{grades.map((grade) => (
-										<option key={grade.value} value={grade.value}>
-											{grade.label}
-										</option>
-									))}
-								</select>
-							</td>
-						</tr>
-					</table>
+					<form onSubmit={handleSubmit(editProfile)}>
+						<table>
+							<tbody>
+								<tr>
+									<td>Email:</td>
+									<td>{currentUser.data.email}</td>
+								</tr>
+								<tr>
+									<td>First Name:</td>
+									<td>
+										<input
+											name="firstName"
+											type="text"
+											ref={register}
+										/>
+									</td>
+								</tr>
+								<tr>
+									<td>Last Name:</td>
+									<td>
+										<input
+											name="lastName"
+											type="text"
+											ref={register}
+										/>
+									</td>
+								</tr>
+								<tr>
+									<td>Alias: </td>
+									<td>
+										<input name="alias" type="text" ref={register} />
+									</td>
+								</tr>
+								<tr>
+									<td>Password:</td>
+									<td>
+										<input
+											name="password"
+											type="password"
+											placeholder="Leave blank if unchanged"
+											ref={register({ minLength: 9 })}
+										/>
+										{errors.password &&
+											errors.password.type === 'minLength' && (
+												<p className="">
+													Password length must be longer than 8.
+												</p>
+											)}
+									</td>
+								</tr>
+								<tr>
+									<td>Confirm password: </td>
+									<td>
+										<input
+											name="confirmPassword"
+											type="password"
+											placeholder="Leave blank if unchanged"
+											ref={register}
+										/>
+									</td>
+								</tr>
+								<tr>
+									<td>Role:</td>
+									<td>{currentUser.data.role}</td>
+								</tr>
+								<tr>
+									<td>Grade:</td>
+									<td>
+										<select name="grade" ref={register}>
+											{grades.map((grade) => (
+												<option
+													key={grade.value}
+													value={grade.value}
+												>
+													{grade.label}
+												</option>
+											))}
+										</select>
+									</td>
+								</tr>
+							</tbody>
+						</table>
 
-					<motion.button
-						type="button"
-						onClick={handleSubmit}
-						whileHover={{ scale: 1.1, transition: { duration: 0.3 } }}
-					>
-						Update
-					</motion.button>
+						<motion.button
+							type="submit"
+							whileHover={{ scale: 1.1, transition: { duration: 0.3 } }}
+						>
+							Update
+						</motion.button>
+					</form>
 				</div>
 			</div>
 		</Layout>
