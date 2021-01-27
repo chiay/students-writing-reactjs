@@ -50,7 +50,7 @@ export default function Post({ userPost, currentUser, setError, id }) {
 		}
 
 		handleDeleteModalClose();
-		window.location.replace(`/promptoverview/${id}`);
+		window.location.replace(`/overview/${id}`);
 	}
 
 	// async function handlePostEdit() {

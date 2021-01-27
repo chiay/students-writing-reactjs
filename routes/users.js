@@ -12,7 +12,7 @@ const userRole = require('../constants/userRole');
  * @access private
  */
 router.post(
-	'/',
+	'/all',
 	passport.authenticate('jwt', { session: false }),
 	async (req, res) => {
 		if (req.user.role !== userRole.ADMIN) {

@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import Layout from './Layout';
+import Layout from '../components/Layout';
 import { Link, useHistory, Redirect } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import signUpImg from '../images/undraw_sign_in.svg';

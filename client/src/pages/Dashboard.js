@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import Layout from './Layout';
+import Layout from '../components/Layout';
 import { useAuth } from '../contexts/AuthContext';
-import AdminSidebar from './AdminSidebar';
+import AdminSidebar from '../components/AdminSidebar';
 import { motion } from 'framer-motion';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
@@ -46,8 +46,6 @@ export default function Dashboard() {
 			confirmPassword,
 			grade,
 		} = data;
-
-		console.log(data);
 
 		if (password !== confirmPassword) {
 			return setError('Passwords do not match.');

@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Layout from './Layout';
+import Layout from '../components/Layout';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import Post from './Post';
-import Modal from './Modal';
-import PromptEntryForm from './PromptEntryForm';
+import Post from '../components/Post';
+import Modal from '../components/Modal';
+import PromptEntryForm from '../components/PromptEntryForm';
 
 export default function PromptOverview() {
 	const [prompt, setCurrentPrompt] = useState();
@@ -43,7 +43,7 @@ export default function PromptOverview() {
 		getList();
 		setLoading(false);
 		return () => cancel();
-	}, []);
+	}, [id]);
 
 	async function handleSubmit(e) {
 		e.preventDefault();
@@ -67,7 +67,7 @@ export default function PromptOverview() {
 		}
 
 		setLoading(false);
-		window.location.replace(`/promptoverview/${id}`);
+		window.location.replace(`/overview/${id}`);
 	}
 
 	function handleDeleteModalClose() {

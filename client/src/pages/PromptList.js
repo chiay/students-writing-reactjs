@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import Layout from './Layout';
+import Layout from '../components/Layout';
 import axios from 'axios';
-import Prompt from './Prompt';
+import Prompt from '../components/Prompt';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import Modal from './Modal';
-import PromptEntryForm from './PromptEntryForm';
+import Modal from '../components/Modal';
+import PromptEntryForm from '../components/PromptEntryForm';
 
 export default function PromptList() {
 	const [list, setList] = useState();
@@ -60,7 +60,7 @@ export default function PromptList() {
 					list.map((prompt) => {
 						return (
 							<Link
-								to={`/promptoverview/${prompt._id}`}
+								to={`/overview/${prompt._id}`}
 								className="link"
 								key={prompt._id}
 							>

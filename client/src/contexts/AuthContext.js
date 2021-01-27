@@ -40,7 +40,7 @@ export function AuthProvider({ children }) {
 		};
 		verifyUser();
 		setLoading(false);
-	}, []);
+	}, [token]);
 
 	async function signUp(email, password) {
 		try {

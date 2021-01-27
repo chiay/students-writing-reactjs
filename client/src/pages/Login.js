@@ -1,8 +1,7 @@
 import React, { useState, useRef } from 'react';
-import Layout from './Layout';
+import Layout from '../components/Layout';
 import { Link, Redirect, useHistory } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import useLocalStorage from '../hooks/useLocalStorage';
 import loginImg from '../images/undraw_my_password.svg';
 
 export default function Login() {
@@ -11,7 +10,6 @@ export default function Login() {
 	const passwordRef = useRef();
 	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
-	const [token, setToken] = useLocalStorage('token', '');
 
 	const history = useHistory();
 
@@ -24,11 +22,7 @@ export default function Login() {
 		try {
 			setError('');
 			setLoading(true);
-			const { data } = await login(
-				emailRef.current.value,
-				passwordRef.current.value
-			);
-			setToken(data.token);
+			await login(emailRef.current.value, passwordRef.current.value);
 			setLoading(false);
 			history.push('/');
 		} catch (err) {

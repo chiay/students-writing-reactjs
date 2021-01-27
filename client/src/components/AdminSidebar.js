@@ -7,7 +7,7 @@ export default function AdminSidebar() {
 			<p>ADMIN CONTROL</p>
 			<ul>
 				<li>
-					<Link to="/admin/user" className="link">
+					<Link to="/admin/users" className="link">
 						User List
 					</Link>
 				</li>

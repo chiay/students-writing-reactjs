@@ -25,7 +25,7 @@ export default function Navbar() {
 						<motion.li
 							whileHover={{ scale: 1.1, transition: { duration: 0.3 } }}
 						>
-							<Link to="/promptlist" className="link">
+							<Link to="/prompts" className="link">
 								Start Writing
 							</Link>
 						</motion.li>

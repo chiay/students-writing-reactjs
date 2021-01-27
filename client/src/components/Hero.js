@@ -10,7 +10,7 @@ export default function Hero() {
 
 	function handleClick() {
 		if (currentUser) {
-			history.push('/promptlist');
+			history.push('/prompts');
 		} else {
 			history.push('/signup');
 		}
