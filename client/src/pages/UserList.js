@@ -3,11 +3,14 @@ import Layout from '../components/Layout';
 import { useAuth } from '../contexts/AuthContext';
 import axios from 'axios';
 import UserInfo from '../components/UserInfo';
+import Modal from '../components/Modal';
+import RoleMod from '../components/RoleMod';
 
 export default function UserList() {
 	const { token } = useAuth();
 	const [userList, setUserList] = useState([]);
 	const [loading, setLoading] = useState(false);
+	const [modalOpen, setModalOpen] = useState(false);
 
 	useEffect(() => {
 		setLoading(true);
@@ -36,14 +39,36 @@ export default function UserList() {
 		return () => cancel();
 	}, [token]);
 
+	function toggleModal() {
+		setModalOpen(!modalOpen);
+	}
+
 	return (
 		<Layout>
-			<div className="flex flex-col">
-				{!loading &&
-					userList &&
-					userList.map((user) => {
-						return <UserInfo user={user} key={user._id} />;
-					})}
+			<div className="userList">
+				<div className="flex flex-jc-fe">
+					<button onClick={toggleModal}>Set Role</button>
+				</div>
+				<Modal open={modalOpen}>
+					<RoleMod users={userList} toggleModal={toggleModal} />
+				</Modal>
+				<table>
+					<thead>
+						<tr>
+							<th>Email</th>
+							<th>Alias</th>
+							<th>Role</th>
+						</tr>
+					</thead>
+					<tbody>
+						{!loading &&
+							userList &&
+							userList.map((user) => {
+								return <UserInfo user={user} key={user._id} />;
+							})}
+					</tbody>
+				</table>
+				<hr />
 			</div>
 		</Layout>
 	);

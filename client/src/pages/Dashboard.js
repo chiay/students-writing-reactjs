@@ -89,7 +89,10 @@ export default function Dashboard() {
 						</div>
 					)}
 					<h2 className="title">PROFILE</h2>
-					<form onSubmit={handleSubmit(editProfile)}>
+					<form
+						className="flex flex-col flex-ai-c"
+						onSubmit={handleSubmit(editProfile)}
+					>
 						<table>
 							<tbody>
 								<tr>

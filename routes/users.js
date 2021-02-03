@@ -104,7 +104,7 @@ router.post('/register', checkUser, async (req, res) => {
 			name: newUser.name,
 			alias: newUser.alias,
 			role: newUser.role,
-			grade: req.user.grade,
+			grade: newUser.grade,
 		});
 	} catch (err) {
 		return res.status(500).json({ message: err.message });
@@ -135,7 +135,8 @@ router.patch(
 				name: updatedUser.name,
 				alias: updatedUser.alias,
 				role: updatedUser.role,
-				grade: req.user.grade,
+				grade: updatedUser.grade,
+				createdOn: updatedUser.createdOn,
 			});
 		} catch (err) {
 			return res.status(500).json({ message: err.message });
