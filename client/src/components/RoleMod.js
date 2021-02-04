@@ -57,23 +57,21 @@ export default function RoleMod({ users, toggleModal }) {
 	}
 
 	async function setRole(data) {
-		setLoading(true);
 		setError('');
 		setSuccess('');
 		const { email, role } = data;
 
 		if (email === '') {
-			setLoading(false);
 			return setError('Please select a user');
 		}
 		if (role === '') {
-			setLoading(false);
 			return setError('A role is not selected.');
 		}
 		if (selectedUser.role === role) {
-			setLoading(false);
 			return setError(`${email} is already a(n) ${role}.`);
 		}
+
+		setLoading(true);
 		try {
 			await axios.patch('/api/user/setRole', { email, role }, config);
 

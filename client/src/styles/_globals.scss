@@ -96,6 +96,23 @@ input {
 	}
 }
 
+.error {
+	padding: 0.5rem;
+	margin-bottom: 1rem;
+	color: $red-500;
+	border: 1px solid $red-500;
+	border-radius: 0.5rem;
+	background-color: $red-100;
+}
+.success {
+	padding: 0.5rem;
+	margin-bottom: 1rem;
+	color: $green-500;
+	border: 1px solid $green-500;
+	border-radius: 0.5rem;
+	background-color: $green-100;
+}
+
 .hide-for-mobile {
 	@include breakpoint-down(medium) {
 		display: none;

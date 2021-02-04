@@ -20,6 +20,7 @@ export default function Dashboard() {
 	});
 
 	const [error, setError] = useState('');
+	const [success, setSuccess] = useState('');
 	const grades = [
 		{ label: 'Please select one', value: '' },
 		{ label: '3rd grade', value: '3rd grade' },
@@ -47,12 +48,14 @@ export default function Dashboard() {
 			grade,
 		} = data;
 
+		setError('');
+		setSuccess('');
+
 		if (password !== confirmPassword) {
 			return setError('Passwords do not match.');
 		}
 
 		try {
-			setError('');
 			await axios.patch(
 				'/api/user/updateProfile',
 				{
@@ -66,6 +69,7 @@ export default function Dashboard() {
 				},
 				config
 			);
+			setSuccess('Profile updated.');
 		} catch (err) {
 			console.log('Unable to update profile');
 			setError('Unable to update your profile. Please try again later.');
@@ -86,6 +90,11 @@ export default function Dashboard() {
 					{error && (
 						<div className="error">
 							<label>{error}</label>
+						</div>
+					)}
+					{success && (
+						<div className="success">
+							<label>{success}</label>
 						</div>
 					)}
 					<h2 className="title">PROFILE</h2>

@@ -8,7 +8,7 @@ export default function Layout({ children }) {
 			<main className="flex flex-jc-c">{children}</main>
 
 			<footer className="flex flex-jc-c" style={{ marginTop: '1.5rem' }}>
-				<label>© 2020 Students Writing.com</label>
+				<label>© 2020 - 2021 Students Writing.com</label>
 			</footer>
 		</div>
 	);

@@ -7,13 +7,15 @@ import { useAuth } from '../contexts/AuthContext';
 import Post from '../components/Post';
 import Modal from '../components/Modal';
 import PromptEntryForm from '../components/PromptEntryForm';
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
+import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 
 export default function PromptOverview() {
 	const [prompt, setCurrentPrompt] = useState();
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState('');
-	const [deleteModalOpen, isDeleteModalOpen] = useState(false);
-	const [editModalOpen, isEditModalOpen] = useState(false);
+	const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+	const [editModalOpen, setEditModalOpen] = useState(false);
 	const textRef = useRef();
 	const { id } = useParams();
 	const { currentUser, token } = useAuth();
@@ -70,16 +72,12 @@ export default function PromptOverview() {
 		window.location.replace(`/overview/${id}`);
 	}
 
-	function handleDeleteModalClose() {
-		isDeleteModalOpen(false);
+	function toggleDeleteModal() {
+		setDeleteModalOpen(!deleteModalOpen);
 	}
 
-	function handleDeleteModalOpen() {
-		isDeleteModalOpen(true);
-	}
-
-	function handleEditModalOpen() {
-		isEditModalOpen(true);
+	function toggleEditModal() {
+		setEditModalOpen(!editModalOpen);
 	}
 
 	async function handlePromptDelete() {
@@ -96,7 +94,7 @@ export default function PromptOverview() {
 		}
 
 		setLoading(false);
-		handleDeleteModalClose();
+		toggleDeleteModal();
 	}
 
 	return (
@@ -104,17 +102,18 @@ export default function PromptOverview() {
 			{!loading && prompt && (
 				<div className="container flex flex-col flex-jc-c flex-ai-c overview">
 					{error && (
-						<div className="overview__error">
+						<div className="error">
 							<label>{error}</label>
 						</div>
 					)}
 					{currentUser && currentUser.data.role === 'admin' && (
 						<div className="overview__admin">
-							<button type="button" onClick={handleEditModalOpen}>
-								Edit
+							<button type="button" onClick={toggleEditModal}>
+								<EditOutlinedIcon fontSize="small" /> <span>Edit</span>
 							</button>
-							<button type="button" onClick={handleDeleteModalOpen}>
-								Delete
+							<button type="button" onClick={toggleDeleteModal}>
+								<DeleteForeverOutlinedIcon fontSize="small" />{' '}
+								<span>Delete</span>
 							</button>
 						</div>
 					)}
@@ -122,7 +121,7 @@ export default function PromptOverview() {
 						<div className="modal__content flex flex-col flex-jc-c">
 							<label>Are you sure you want to delete this prompt?</label>
 							<div className="modal__content flex flex-jc-c">
-								<button type="button" onClick={handleDeleteModalClose}>
+								<button type="button" onClick={toggleDeleteModal}>
 									No
 								</button>
 								<button
@@ -137,8 +136,9 @@ export default function PromptOverview() {
 					</Modal>
 					<Modal open={editModalOpen}>
 						<PromptEntryForm
+							id={id}
 							prompt={prompt}
-							setModalOpen={isEditModalOpen}
+							setModalOpen={toggleEditModal}
 						/>
 					</Modal>
 					<h1 className="overview__title">{prompt.title}</h1>

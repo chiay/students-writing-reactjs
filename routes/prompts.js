@@ -82,6 +82,9 @@ router.patch(
 		if (req.body.description != null) {
 			res.Prompt.description = req.body.description;
 		}
+		if (req.body.type != null) {
+			res.Prompt.type = req.body.type;
+		}
 		try {
 			const updatedPrompt = await res.Prompt.save();
 			res.status(200).json(updatedPrompt);

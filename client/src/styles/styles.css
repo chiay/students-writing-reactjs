@@ -96,6 +96,24 @@ input::placeholder {
   flex-direction: row;
 }
 
+.error {
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  color: #EF4444;
+  border: 1px solid #EF4444;
+  border-radius: 0.5rem;
+  background-color: #FEE2E2;
+}
+
+.success {
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  color: #22C55E;
+  border: 1px solid #22C55E;
+  border-radius: 0.5rem;
+  background-color: #DCFCE7;
+}
+
 @media (max-width: ) {
   .hide-for-mobile {
     display: none;
@@ -234,14 +252,6 @@ input::placeholder {
 .signUp__input h1 {
   padding: 1rem;
 }
-.signUp__input .error {
-  padding: 0.5rem;
-  margin-bottom: 1rem;
-  color: #EF4444;
-  border: 1px solid #EF4444;
-  border-radius: 0.5rem;
-  background-color: #FEE2E2;
-}
 .signUp__input form :not(:last-child) {
   margin-bottom: 0.75rem;
 }
@@ -268,14 +278,6 @@ input::placeholder {
 }
 .login__input h1 {
   padding: 1rem;
-}
-.login__input .error {
-  padding: 0.5rem;
-  margin-bottom: 1rem;
-  color: #EF4444;
-  border: 1px solid #EF4444;
-  border-radius: 0.5rem;
-  background-color: #FEE2E2;
 }
 .login__input form :not(:last-child) {
   margin-bottom: 0.75rem;
@@ -359,14 +361,6 @@ input::placeholder {
   color: #A1A1AA;
   text-align: left;
 }
-.overview__error {
-  padding: 0.5rem;
-  margin-bottom: 1rem;
-  color: #EF4444;
-  border: 1px solid #EF4444;
-  border-radius: 0.5rem;
-  background-color: #FEE2E2;
-}
 .overview__admin {
   padding: 1rem;
   border: 2px solid #F87171;
@@ -378,6 +372,12 @@ input::placeholder {
 .overview__admin button {
   width: 5rem;
   margin: 0 0.5rem;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+.overview__admin button span {
+  margin: 0 0.2rem;
 }
 .overview .modal__content label {
   text-align: center;
@@ -497,22 +497,6 @@ input::placeholder {
   text-align: left;
   padding: 0.5rem 0;
 }
-.modal__content form .error {
-  padding: 0.5rem;
-  margin-bottom: 1rem;
-  color: #EF4444;
-  border: 1px solid #EF4444;
-  border-radius: 0.5rem;
-  background-color: #FEE2E2;
-}
-.modal__content form .success {
-  padding: 0.5rem;
-  margin-bottom: 1rem;
-  color: #22C55E;
-  border: 1px solid #22C55E;
-  border-radius: 0.5rem;
-  background-color: #DCFCE7;
-}
 .modal__content form input,
 .modal__content form select {
   padding: 0.5rem;
@@ -533,15 +517,6 @@ input::placeholder {
 }
 .dashboard__profile {
   padding: 0 2rem;
-  border-radius: 1rem;
-}
-.dashboard__profile .error {
-  padding: 0.5rem;
-  margin-bottom: 1rem;
-  color: #EF4444;
-  border: 1px solid #EF4444;
-  border-radius: 0.5rem;
-  background-color: #FEE2E2;
 }
 .dashboard__profile .title {
   padding: 1rem;
@@ -558,6 +533,7 @@ input::placeholder {
   padding: 0.5rem;
   border: 1px solid #E4E4E7;
   border-radius: 0.5rem;
+  font-family: inherit;
 }
 .dashboard__profile button {
   width: 20%;

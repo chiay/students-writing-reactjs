@@ -5,6 +5,7 @@ import axios from 'axios';
 import UserInfo from '../components/UserInfo';
 import Modal from '../components/Modal';
 import RoleMod from '../components/RoleMod';
+import SettingsIcon from '@material-ui/icons/Settings';
 
 export default function UserList() {
 	const { token } = useAuth();
@@ -47,7 +48,9 @@ export default function UserList() {
 		<Layout>
 			<div className="userList">
 				<div className="flex flex-jc-fe">
-					<button onClick={toggleModal}>Set Role</button>
+					<button className="flex flex-jc-c" onClick={toggleModal}>
+						<SettingsIcon />
+					</button>
 				</div>
 				<Modal open={modalOpen}>
 					<RoleMod users={userList} toggleModal={toggleModal} />

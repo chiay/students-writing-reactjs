@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext';
 
 export default function PromptEntryForm({
+	id,
 	list,
 	setList,
 	prompt,
@@ -51,10 +52,29 @@ export default function PromptEntryForm({
 			console.log('Unable to create prompt.');
 		}
 		setLoading(false);
-		setModalOpen(false);
+		setModalOpen();
 	}
 
-	async function editPrompt() {}
+	async function editPrompt(data) {
+		setLoading(true);
+		const { title, description, type } = data;
+		try {
+			await axios.patch(
+				`/api/prompt/${id}/edit`,
+				{
+					title,
+					description,
+					type,
+				},
+				config
+			);
+		} catch (err) {
+			console.log('Unable to edit prompt.');
+		}
+		setLoading(false);
+		setModalOpen();
+		window.location.replace(`/overview/${id}`);
+	}
 
 	return (
 		<div className="modal__content flex flex-jc-c">
@@ -85,7 +105,7 @@ export default function PromptEntryForm({
 					))}
 				</select>
 				<div className="buttonPanel flex flex-jc-c flex-ai-c">
-					<button type="button" onClick={() => setModalOpen(false)}>
+					<button type="button" onClick={setModalOpen}>
 						Close
 					</button>
 					<button type="submit" disabled={loading}>

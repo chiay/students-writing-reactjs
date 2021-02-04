@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import Modal from '../components/Modal';
 import PromptEntryForm from '../components/PromptEntryForm';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 export default function PromptList() {
 	const [list, setList] = useState();
@@ -34,16 +35,20 @@ export default function PromptList() {
 		return () => cancel();
 	}, []);
 
+	function toggleModalOpen() {
+		setModalOpen(!modalOpen);
+	}
+
 	return (
 		<Layout>
 			<div className="container promptList">
 				{currentUser && currentUser.data.role === 'admin' && (
 					<div className="promptList__control flex flex-jc-fe">
 						<button
-							className="btnAddNew"
-							onClick={() => setModalOpen(true)}
+							className="btnAddNew flex flex-jc-c"
+							onClick={toggleModalOpen}
 						>
-							Add New
+							<AddCircleOutlineIcon />
 						</button>
 					</div>
 				)}
@@ -52,7 +57,7 @@ export default function PromptList() {
 					<PromptEntryForm
 						list={list}
 						setList={setList}
-						setModalOpen={setModalOpen}
+						setModalOpen={toggleModalOpen}
 					/>
 				</Modal>
 
