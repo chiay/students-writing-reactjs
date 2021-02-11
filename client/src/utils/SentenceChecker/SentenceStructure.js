@@ -13,7 +13,7 @@ module.exports = [
 	'#Pronoun #Verb #Adverb * #Preposition * #Determiner #Adjective #Noun',
 
 	'#Pronoun #Verb #Adjective', // "Be verb"
-
+	'#Pronoun #Verb #Noun',
 	'#Pronoun #Verb #Determiner #Noun',
 	'#Pronoun #Verb #Determiner #Adjective #Noun',
 	'#Pronoun #Verb #Determiner #Adjective #Noun #Adverb',
