@@ -9,7 +9,9 @@ const userRole = require('../constants/userRole');
 
 /**
  * Get all users
+ *
  * @access private
+ * @returns {Object}
  */
 router.post(
 	'/all',
@@ -29,7 +31,9 @@ router.post(
 
 /**
  * Login a user via passport and issue JWT
+ *
  * @access public
+ * @returns {Object}
  */
 router.post('/login', passport.authenticate('login'), (req, res) => {
 	if (req.user) {
@@ -52,7 +56,9 @@ router.post('/login', passport.authenticate('login'), (req, res) => {
 
 /**
  * Verify a user via JWT
+ *
  * @access public
+ * @returns {Object}
  */
 router.post(
 	'/verifyToken',
@@ -76,16 +82,10 @@ router.post(
 );
 
 /**
- * Logout a user via passport
- * @access public
- */
-router.get('/logout', (req, res) => {
-	req.logOut();
-});
-
-/**
  * Register a user
+ *
  * @access public
+ * @returns {Object}
  */
 router.post('/register', checkUser, async (req, res) => {
 	try {
@@ -113,7 +113,9 @@ router.post('/register', checkUser, async (req, res) => {
 
 /**
  * Set role to a user by admin
+ *
  * @access private
+ * @returns {Object}
  */
 
 router.patch(
@@ -146,7 +148,9 @@ router.patch(
 
 /**
  * Update user profile
+ *
  * @access public
+ * @returns {Object}
  */
 
 router.patch(
@@ -186,7 +190,9 @@ router.patch(
 
 /**
  * Delete user
+ *
  * @access private
+ * @returns {Object}
  */
 router.delete(
 	'/delete',
@@ -207,9 +213,11 @@ router.delete(
 
 /**
  * Check if user exist
- * @param {*} req
- * @param {*} res
- * @param {*} next
+ *
+ * @param {Object} req
+ * @param {Object} res
+ * @param {function} next
+ * @returns {Object}
  */
 async function checkUser(req, res, next) {
 	try {
