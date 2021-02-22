@@ -1,5 +1,5 @@
-const structures = require('./SentenceStructure');
-const compromise = require('compromise');
+import structures from './SentenceStructure';
+import compromise from 'compromise';
 
 /**
  * Filter a list of sentence structures
@@ -9,7 +9,7 @@ const compromise = require('compromise');
  * @returns {array} Filtered list of structures that match part of speech of first word
  * @since 1.0.0
  */
-function filterStructure(sentence) {
+export function filterStructure(sentence) {
 	const identifier = sentence.split(' ')[0];
 
 	return structures.filter((structure) => {
@@ -28,7 +28,7 @@ function filterStructure(sentence) {
  * 						 False if no match
  * @since 1.0.0
  */
-function hasFullStructCheck(sentence, filteredStructures) {
+export function hasFullStructCheck(sentence, filteredStructures) {
 	return filteredStructures.some((structure) => {
 		return compromise(sentence).has(structure);
 	});
@@ -43,7 +43,7 @@ function hasFullStructCheck(sentence, filteredStructures) {
  * @returns {string} structure that matches sentence
  * @since 1.0.0
  */
-function getFullStructCheck(sentence, filteredStructures) {
+export function getFullStructCheck(sentence, filteredStructures) {
 	return filteredStructures.find((structure) => {
 		return compromise(sentence).has(structure);
 	});
@@ -65,5 +65,3 @@ function matchWords(words, structure) {
 	let checkedStructure = structure.shift();
 	if (result) return 1 + matchWords(checkedWords, checkedStructure)
 }*/
-
-module.exports = { filterStructure, hasFullStructCheck, getFullStructCheck };

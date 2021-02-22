@@ -2,16 +2,23 @@ import React, { useState } from 'react';
 import Modal from './Modal';
 import axios from 'axios';
 import useLocalStorage from '../hooks/useLocalStorage';
+import {
+	filterStructure,
+	getFullStructCheck,
+} from '../utils/SentenceChecker/StructureChecker';
 
 export default function Post({ userPost, currentUser, setError, id }) {
 	const isOwner = currentUser
 		? userPost.postedBy.email === currentUser.data.email
 		: false;
 
+	const [checkModalOpen, setCheckModalOpen] = useState(false);
 	const [deleteModalOpen, isDeleteModalOpen] = useState(false);
 	// const [editModalOpen, isEditModalOpen] = useState(false);
 	// const textRef = useRef();
 	const [token] = useLocalStorage('token', '');
+
+	const [checkResult, setCheckResult] = useState('');
 
 	const config = {
 		headers: {
@@ -26,6 +33,26 @@ export default function Post({ userPost, currentUser, setError, id }) {
 
 	function handleDeleteModalOpen() {
 		isDeleteModalOpen(true);
+	}
+
+	function handleCheckModalOpen() {
+		setCheckModalOpen(true);
+		check();
+	}
+
+	function handleCheckModalClose() {
+		setCheckModalOpen(false);
+	}
+
+	function check() {
+		const filtered = filterStructure(userPost.text);
+		const result = getFullStructCheck(userPost.text, filtered);
+
+		setCheckResult(
+			result
+				? `Yay! You got it. Your sentence matches ${result}`
+				: 'Oops! Something is wrong with your sentence.'
+		);
 	}
 
 	// function handleEditModalClose() {
@@ -82,7 +109,9 @@ export default function Post({ userPost, currentUser, setError, id }) {
 			<p className="post__text">{userPost.text}</p>
 			{isOwner && (
 				<div className="post__control flex flex-jc-fe">
-					<button type="button">Check</button>
+					<button type="button" onClick={handleCheckModalOpen}>
+						Check
+					</button>
 					{/* <button type="button" onClick={handleEditModalOpen}>
 						Edit
 					</button> */}
@@ -91,19 +120,34 @@ export default function Post({ userPost, currentUser, setError, id }) {
 					</button>
 				</div>
 			)}
-			<Modal open={deleteModalOpen}>
-				<div className="modal__content flex flex-col flex-jc-c">
-					<label>Are you sure you want to delete this post?</label>
-					<div className="modal__content flex flex-jc-c">
-						<button type="button" onClick={handleDeleteModalClose}>
-							No
-						</button>
-						<button type="button" onClick={handlePostDelete}>
-							Yes
-						</button>
+			{isOwner && (
+				<Modal open={checkModalOpen}>
+					<div className="modal__content flex flex-col flex-jc-c">
+						<label>Your Result:</label>
+						<label>{checkResult}</label>
+						<div className="modal__control flex flex-jc-c">
+							<button type="button" onClick={handleCheckModalClose}>
+								Close
+							</button>
+						</div>
 					</div>
-				</div>
-			</Modal>
+				</Modal>
+			)}
+			{isOwner && (
+				<Modal open={deleteModalOpen}>
+					<div className="modal__content flex flex-col flex-jc-c">
+						<label>Are you sure you want to delete this post?</label>
+						<div className="modal__control flex flex-jc-c">
+							<button type="button" onClick={handleDeleteModalClose}>
+								No
+							</button>
+							<button type="button" onClick={handlePostDelete}>
+								Yes
+							</button>
+						</div>
+					</div>
+				</Modal>
+			)}
 			{/* <Modal open={editModalOpen}>
 				<div className="modal__content flex flex-col flex-jc-c">
 					<textarea

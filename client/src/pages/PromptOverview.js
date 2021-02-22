@@ -106,7 +106,7 @@ export default function PromptOverview() {
 							<label>{error}</label>
 						</div>
 					)}
-					{currentUser && currentUser.data.role === 'admin' && (
+					{currentUser?.data.role === 'admin' && (
 						<div className="overview__admin">
 							<button type="button" onClick={toggleEditModal}>
 								<EditOutlinedIcon fontSize="small" /> <span>Edit</span>
@@ -117,30 +117,36 @@ export default function PromptOverview() {
 							</button>
 						</div>
 					)}
-					<Modal open={deleteModalOpen}>
-						<div className="modal__content flex flex-col flex-jc-c">
-							<label>Are you sure you want to delete this prompt?</label>
-							<div className="modal__content flex flex-jc-c">
-								<button type="button" onClick={toggleDeleteModal}>
-									No
-								</button>
-								<button
-									type="button"
-									onClick={handlePromptDelete}
-									disabled={loading}
-								>
-									Yes
-								</button>
+					{currentUser?.data.role === 'admin' && (
+						<Modal open={deleteModalOpen}>
+							<div className="modal__content flex flex-col flex-jc-c">
+								<label>
+									Are you sure you want to delete this prompt?
+								</label>
+								<div className="modal__content flex flex-jc-c">
+									<button type="button" onClick={toggleDeleteModal}>
+										No
+									</button>
+									<button
+										type="button"
+										onClick={handlePromptDelete}
+										disabled={loading}
+									>
+										Yes
+									</button>
+								</div>
 							</div>
-						</div>
-					</Modal>
-					<Modal open={editModalOpen}>
-						<PromptEntryForm
-							id={id}
-							prompt={prompt}
-							setModalOpen={toggleEditModal}
-						/>
-					</Modal>
+						</Modal>
+					)}
+					{currentUser?.data.role === 'admin' && (
+						<Modal open={editModalOpen}>
+							<PromptEntryForm
+								id={id}
+								prompt={prompt}
+								setModalOpen={toggleEditModal}
+							/>
+						</Modal>
+					)}
 					<h1 className="overview__title">{prompt.title}</h1>
 					<label className="overview__metadata">
 						<span className="type">{prompt.type}</span> |
@@ -152,7 +158,7 @@ export default function PromptOverview() {
 						<i>{prompt.description ? prompt.description : ''}</i>
 					</p>
 
-					<div className="overview__posts">
+					<div className="overview__posts flex flex-col flex-jc-c">
 						{prompt.posts.length > 0 ? (
 							prompt.posts.map((userPost) => {
 								return (
