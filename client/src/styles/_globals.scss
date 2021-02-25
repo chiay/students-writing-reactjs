@@ -113,6 +113,15 @@ input {
 	background-color: $green-100;
 }
 
+.warning {
+	padding: 0.5rem;
+	margin-bottom: 1rem;
+	color: $yellow-500;
+	border: 1px solid $yellow-500;
+	border-radius: 0.5rem;
+	background-color: $yellow-100;
+}
+
 .hide-for-mobile {
 	@include breakpoint-down(medium) {
 		display: none;

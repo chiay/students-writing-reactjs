@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import Modal from './Modal';
 import axios from 'axios';
-import useLocalStorage from '../hooks/useLocalStorage';
+import { useForm } from 'react-hook-form';
+import { useAuth } from '../contexts/AuthContext';
 import {
 	filterStructure,
 	getFullStructCheck,
@@ -11,12 +12,15 @@ export default function Post({ userPost, currentUser, setError, id }) {
 	const isOwner = currentUser
 		? userPost.postedBy.email === currentUser.data.email
 		: false;
-
+	// const { register, handleSubmit } = useForm({
+	// 	defaultValues: {
+	// 		post: userPost.text,
+	// 	},
+	// });
 	const [checkModalOpen, setCheckModalOpen] = useState(false);
-	const [deleteModalOpen, isDeleteModalOpen] = useState(false);
-	// const [editModalOpen, isEditModalOpen] = useState(false);
-	// const textRef = useRef();
-	const [token] = useLocalStorage('token', '');
+	const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+	// const [editModalOpen, setEditModalOpen] = useState(false);
+	const { token } = useAuth();
 
 	const [checkResult, setCheckResult] = useState('');
 
@@ -28,11 +32,11 @@ export default function Post({ userPost, currentUser, setError, id }) {
 	};
 
 	function handleDeleteModalClose() {
-		isDeleteModalOpen(false);
+		setDeleteModalOpen(false);
 	}
 
 	function handleDeleteModalOpen() {
-		isDeleteModalOpen(true);
+		setDeleteModalOpen(true);
 	}
 
 	function handleCheckModalOpen() {
@@ -45,8 +49,7 @@ export default function Post({ userPost, currentUser, setError, id }) {
 	}
 
 	function check() {
-		const filtered = filterStructure(userPost.text);
-		const result = getFullStructCheck(userPost.text, filtered);
+		const result = getFullStructCheck(userPost.text);
 
 		setCheckResult(
 			result
@@ -56,11 +59,11 @@ export default function Post({ userPost, currentUser, setError, id }) {
 	}
 
 	// function handleEditModalClose() {
-	// 	isEditModalOpen(false);
+	// 	setEditModalOpen(false);
 	// }
 
 	// function handleEditModalOpen() {
-	// 	isEditModalOpen(true);
+	// 	setEditModalOpen(true);
 	// }
 
 	async function handlePostDelete() {
@@ -80,17 +83,18 @@ export default function Post({ userPost, currentUser, setError, id }) {
 		window.location.replace(`/overview/${id}`);
 	}
 
-	// async function handlePostEdit() {
+	// async function editPost(data) {
+	// 	const { post } = data;
 	// 	try {
 	// 		setError('');
-
+	// 		await axios.patch();
 	// 	} catch (err) {
 	// 		console.log(err, 'Unable to edit answer.');
 	// 		setError('Unable to edit your answer. Please try again later.');
 	// 	}
 
 	// 	handleEditModalClose();
-	// 	window.location.replace(`/promptoverview/${id}`);
+	// 	window.location.replace(`/overview/${id}`);
 	// }
 
 	return (
@@ -108,65 +112,72 @@ export default function Post({ userPost, currentUser, setError, id }) {
 			</div>
 			<p className="post__text">{userPost.text}</p>
 			{isOwner && (
-				<div className="post__control flex flex-jc-fe">
-					<button type="button" onClick={handleCheckModalOpen}>
-						Check
-					</button>
-					{/* <button type="button" onClick={handleEditModalOpen}>
-						Edit
-					</button> */}
-					<button type="button" onClick={handleDeleteModalOpen}>
-						Delete
-					</button>
-				</div>
-			)}
-			{isOwner && (
-				<Modal open={checkModalOpen}>
-					<div className="modal__content flex flex-col flex-jc-c">
-						<label>Your Result:</label>
-						<label>{checkResult}</label>
-						<div className="modal__control flex flex-jc-c">
-							<button type="button" onClick={handleCheckModalClose}>
-								Close
-							</button>
-						</div>
-					</div>
-				</Modal>
-			)}
-			{isOwner && (
-				<Modal open={deleteModalOpen}>
-					<div className="modal__content flex flex-col flex-jc-c">
-						<label>Are you sure you want to delete this post?</label>
-						<div className="modal__control flex flex-jc-c">
-							<button type="button" onClick={handleDeleteModalClose}>
-								No
-							</button>
-							<button type="button" onClick={handlePostDelete}>
-								Yes
-							</button>
-						</div>
-					</div>
-				</Modal>
-			)}
-			{/* <Modal open={editModalOpen}>
-				<div className="modal__content flex flex-col flex-jc-c">
-					<textarea
-						className="panelInput"
-						col="80"
-						row="10"
-						ref={textRef}
-						value={userPost.text}
-					/>
-					<div className="flex flex-jc-c panelControl">
-						<button type="button" onClick={handleEditModalClose}>
-							Cancel
+				<>
+					<div className="post__control flex flex-jc-fe">
+						<button type="button" onClick={handleCheckModalOpen}>
+							Check
 						</button>
-						<button type="button" onClick={handlePostEdit}>
-							Submit
+						{/* <button type="button" onClick={handleEditModalOpen}>
+							Edit
+						</button> */}
+						<button type="button" onClick={handleDeleteModalOpen}>
+							Delete
 						</button>
 					</div>
-				</div>
-			</Modal> */}
+					<Modal open={checkModalOpen}>
+						<div className="modal__content flex flex-col flex-jc-c">
+							<div className="warning">
+								<label>
+									This feature is still under construction and only
+									works for sentences.
+								</label>
+							</div>
+							<label className="title">Your Result:</label>
+							<label>{checkResult}</label>
+							<div className="control flex flex-jc-c">
+								<button type="button" onClick={handleCheckModalClose}>
+									Close
+								</button>
+							</div>
+						</div>
+					</Modal>
+					<Modal open={deleteModalOpen}>
+						<div className="modal__content flex flex-col flex-jc-c">
+							<label>Are you sure you want to delete this post?</label>
+							<div className="control flex flex-jc-c">
+								<button type="button" onClick={handleDeleteModalClose}>
+									No
+								</button>
+								<button type="button" onClick={handlePostDelete}>
+									Yes
+								</button>
+							</div>
+						</div>
+					</Modal>
+					{/* <Modal open={editModalOpen}>
+						<div className="modal__content flex flex-jc-c">
+							<form
+								className="flex flex-col"
+								onSubmit={handleSubmit(editPost)}
+							>
+								<textarea
+									name="post"
+									className="panelInput"
+									col="200"
+									row="10"
+									ref={register}
+								/>
+								<div className="flex flex-jc-c panelControl">
+									<button type="button" onClick={handleEditModalClose}>
+										Cancel
+									</button>
+									<button type="submit">Edit</button>
+								</div>
+							</form>
+						</div>
+					</Modal> */}
+				</>
+			)}
 		</div>
 	);
 }

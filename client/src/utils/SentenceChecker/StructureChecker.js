@@ -23,13 +23,15 @@ export function filterStructure(sentence) {
  *
  * @version 1.0.0
  * @param {string} sentence String for analysis
- * @param {array} filteredStructures Filtered list of structures
+ * @param {array} filteredStructures Filtered list of structures(optional)
  * @returns {boolean} True if one structure is matched
  * 						 False if no match
  * @since 1.0.0
  */
 export function hasFullStructCheck(sentence, filteredStructures) {
-	return filteredStructures.some((structure) => {
+	const structures = filteredStructures ?? filterStructure(sentence);
+
+	return structures.some((structure) => {
 		return compromise(sentence).has(structure);
 	});
 }
@@ -38,15 +40,53 @@ export function hasFullStructCheck(sentence, filteredStructures) {
  * Match sentence with list of structures using Compromise and returns structure that matches
  *
  * @version 1.0.0
- * @param {string} sentence
- * @param {array} filteredStructures
+ * @param {string} sentence String for analysis
+ * @param {array} filteredStructures Filtered list of structures(optional)
  * @returns {string} structure that matches sentence
  * @since 1.0.0
  */
 export function getFullStructCheck(sentence, filteredStructures) {
-	return filteredStructures.find((structure) => {
+	const structures = filteredStructures ?? filterStructure(sentence);
+
+	return structures.find((structure) => {
 		return compromise(sentence).has(structure);
 	});
+}
+/**
+ * Take one paragraph and analyze each sentence with structures
+ *
+ * @version 1.0.0
+ * @param {string} paragraph
+ * @returns {Object} structures that match every sentence
+ * @since 1.0.0
+ */
+
+export function getFullParagraphCheck(paragraph) {
+	const sentences = paragraph
+		.split(
+			/((?![.\n\s])[^.\n"]*(?:"[^\n"]*[^\n".]"[^.\n"]*)*(?:"[^"\n]+\."|\.|(?=\n)))\s*/gi
+		)
+		.filter((el) => {
+			return el.length !== 0;
+		});
+
+	const result = [];
+	sentences.forEach((sentence) => {
+		let structure = getFullStructCheck(sentence);
+		if (structure) {
+			result.push({
+				sentence,
+				structure,
+			});
+		} else {
+			result.push({
+				sentence,
+				structure: 'none',
+			});
+		}
+	});
+
+	return result;
 }
 
 /*function perWordStructCheck(sentence, filteredStructures) {
