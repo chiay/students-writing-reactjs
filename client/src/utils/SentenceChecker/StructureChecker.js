@@ -89,6 +89,19 @@ export function getFullParagraphCheck(paragraph) {
 	return result;
 }
 
+/**
+ *
+ * @version 1.0.0
+ * @param {string} sentence String for analysis
+ * @param {array} filteredStructures Filtered list of structures(optional)
+ * @returns {Object} containing tags of each words
+ * @since 1.0.0
+ */
+
+export function getTags(sentence) {
+	return compromise(sentence).json();
+}
+
 /*function perWordStructCheck(sentence, filteredStructures) {
 	filteredStructures.forEach((structure) => {
 		let splittedStructure = structure.split(' ');

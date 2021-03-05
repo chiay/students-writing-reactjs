@@ -474,6 +474,9 @@ input::placeholder {
   text-align: center;
   font-size: 1.25rem;
 }
+.post .modal__content table tbody td {
+  text-align: center;
+}
 .post .modal__content form {
   width: 100%;
 }

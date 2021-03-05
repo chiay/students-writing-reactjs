@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import Modal from './Modal';
 import axios from 'axios';
-import { useForm } from 'react-hook-form';
+//import { useForm } from 'react-hook-form';
 import { useAuth } from '../contexts/AuthContext';
 import {
 	filterStructure,
 	getFullStructCheck,
+	getTags,
 } from '../utils/SentenceChecker/StructureChecker';
+import CheckModal from './CheckModal';
 
 export default function Post({ userPost, currentUser, setError, id }) {
 	const isOwner = currentUser
@@ -23,6 +25,7 @@ export default function Post({ userPost, currentUser, setError, id }) {
 	const { token } = useAuth();
 
 	const [checkResult, setCheckResult] = useState('');
+	const [tags, setTags] = useState();
 
 	const config = {
 		headers: {
@@ -49,7 +52,11 @@ export default function Post({ userPost, currentUser, setError, id }) {
 	}
 
 	function check() {
-		const result = getFullStructCheck(userPost.text);
+		const structures = filterStructure(userPost.text);
+		const result = getFullStructCheck(userPost.text, structures);
+		const [terms] = getTags(userPost.text, structures);
+
+		setTags(terms.terms);
 
 		setCheckResult(
 			result
@@ -125,21 +132,11 @@ export default function Post({ userPost, currentUser, setError, id }) {
 						</button>
 					</div>
 					<Modal open={checkModalOpen}>
-						<div className="modal__content flex flex-col flex-jc-c">
-							<div className="warning">
-								<label>
-									This feature is still under construction and only
-									works for sentences.
-								</label>
-							</div>
-							<label className="title">Your Result:</label>
-							<label>{checkResult}</label>
-							<div className="control flex flex-jc-c">
-								<button type="button" onClick={handleCheckModalClose}>
-									Close
-								</button>
-							</div>
-						</div>
+						<CheckModal
+							checkResult={checkResult}
+							tags={tags}
+							handleCheckModalClose={handleCheckModalClose}
+						/>
 					</Modal>
 					<Modal open={deleteModalOpen}>
 						<div className="modal__content flex flex-col flex-jc-c">

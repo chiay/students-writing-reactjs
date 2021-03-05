@@ -32,6 +32,14 @@
 				font-size: $text-xl;
 			}
 
+			table {
+				tbody {
+					td {
+						text-align: center;
+					}
+				}
+			}
+
 			form {
 				width: 100%;
 				.panelInput {
