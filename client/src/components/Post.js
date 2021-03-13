@@ -60,7 +60,7 @@ export default function Post({ userPost, currentUser, setError, id }) {
 
 		setCheckResult(
 			result
-				? `Yay! You got it. Your sentence matches ${result}`
+				? `Yay! You got it. Your sentence matches a structure.`
 				: 'Oops! Something is wrong with your sentence.'
 		);
 	}

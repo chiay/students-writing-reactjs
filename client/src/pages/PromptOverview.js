@@ -50,7 +50,7 @@ export default function PromptOverview() {
 	async function handleSubmit(e) {
 		e.preventDefault();
 
-		if (textRef.current.value.length <= 4) {
+		if (textRef.current.value.length <= 3) {
 			return setError('The minimum words is 4.');
 		}
 
