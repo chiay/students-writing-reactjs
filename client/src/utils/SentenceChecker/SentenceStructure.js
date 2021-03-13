@@ -1,3 +1,13 @@
+/**
+ * Legend:
+ *
+ * (A|B) or [A|B] = Either having 'A' or 'B'
+ *
+ * A? = 'A' is good to have but optional
+ *
+ * #Determiner a.k.a Article = A, An, The
+ */
+
 module.exports = [
 	'#Pronoun #Verb (#Adjective|#Noun|#Adverb)',
 
