@@ -347,9 +347,14 @@ input::placeholder {
   margin-left: 0.5rem;
 }
 .prompt__description {
+  width: 100%;
+  display: block;
   font-size: 0.875rem;
   color: #A1A1AA;
   line-height: 1.5;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .overview {
@@ -368,7 +373,7 @@ input::placeholder {
 }
 .overview__description {
   color: #A1A1AA;
-  text-align: left;
+  text-align: justify;
 }
 .overview__admin {
   padding: 1rem;
@@ -402,6 +407,7 @@ input::placeholder {
   padding: 1rem;
   font-size: 1.25rem;
   color: #EF4444;
+  text-align: center;
 }
 .overview__panel {
   width: 80%;

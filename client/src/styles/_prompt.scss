@@ -18,8 +18,13 @@
 	}
 
 	&__description {
+		width: 100%;
+		display: block;
 		font-size: $text-sm;
 		color: $gray-400;
 		line-height: 1.5;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
 	}
 }
