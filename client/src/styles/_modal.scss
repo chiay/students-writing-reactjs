@@ -7,12 +7,14 @@
 	overflow: auto;
 	background-color: rgb(0, 0, 0);
 	background-color: rgba(0, 0, 0, 0.4);
+	z-index: 99;
 
 	&__body {
 		position: fixed;
 		background: white;
 		width: 60%;
-		//height: auto;
+		max-height: 80vh;
+		overflow-y: auto;
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);

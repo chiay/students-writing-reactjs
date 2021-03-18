@@ -31,7 +31,7 @@ router.get('/:id', async (req, res) => {
 	try {
 		const prompt = await Prompt.findById(req.params.id).populate(
 			'posts.postedBy',
-			{ email: 1, alias: 1 } // Show only email
+			{ email: 1, alias: 1 } // Show only email and alias
 		);
 		res.status(200).json(prompt);
 	} catch (err) {
@@ -54,7 +54,9 @@ router.post(
 			const tempPrompt = new Prompt({
 				title: req.body.title,
 				description: req.body.description,
+				content: req.body.content,
 				type: req.body.type,
+				grade: req.body.grade,
 			});
 			const newPrompt = await tempPrompt.save();
 			res.status(200).json(newPrompt);
@@ -82,8 +84,14 @@ router.patch(
 		if (req.body.description != null) {
 			res.Prompt.description = req.body.description;
 		}
+		if (req.body.content != null) {
+			res.Prompt.content = req.body.content;
+		}
 		if (req.body.type != null) {
 			res.Prompt.type = req.body.type;
+		}
+		if (req.body.grade != null) {
+			res.Prompt.grade = req.body.grade;
 		}
 		try {
 			const updatedPrompt = await res.Prompt.save();

@@ -9,6 +9,8 @@ import Modal from '../components/Modal';
 import PromptEntryForm from '../components/PromptEntryForm';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
+import { EditorState, convertFromRaw } from 'draft-js';
+import { DraftailEditor } from 'draftail';
 
 export default function PromptOverview() {
 	const [prompt, setCurrentPrompt] = useState();
@@ -26,6 +28,7 @@ export default function PromptOverview() {
 			Authorization: `Bearer ${token}`,
 		},
 	};
+	const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
 	useEffect(() => {
 		setLoading(true);
@@ -37,12 +40,18 @@ export default function PromptOverview() {
 					cancelToken: new axios.CancelToken((c) => (cancel = c)),
 				});
 				setCurrentPrompt(data);
+				setEditorState(
+					EditorState.createWithContent(
+						convertFromRaw(JSON.parse(data.content))
+					)
+				);
 			} catch (err) {
 				console.log('Unable to fetch data from server.');
 			}
 		};
 
 		getList();
+		getGrade();
 		setLoading(false);
 		return () => cancel();
 	}, [id]);
@@ -78,6 +87,18 @@ export default function PromptOverview() {
 
 	function toggleEditModal() {
 		setEditModalOpen(!editModalOpen);
+	}
+
+	function getGrade() {
+		if (prompt?.grade) {
+			let grade = [];
+			for (const g in prompt.grade) {
+				if (prompt.grade[g]) {
+					grade.push(g.split('_')[1]);
+				}
+			}
+			return grade.join(', ').toString();
+		}
 	}
 
 	async function handlePromptDelete() {
@@ -149,6 +170,7 @@ export default function PromptOverview() {
 					)}
 					<h1 className="overview__title">{prompt.title}</h1>
 					<label className="overview__metadata">
+						<span className="grade">Grade: {getGrade()}</span> |
 						<span className="type">{prompt.type}</span> |
 						<span className="datetime">
 							{new Date(prompt.createdOn).toLocaleString()}
@@ -157,6 +179,13 @@ export default function PromptOverview() {
 					<p className="overview__description">
 						<i>{prompt.description ? prompt.description : ''}</i>
 					</p>
+					<div className="overview__content">
+						<DraftailEditor
+							editorState={editorState}
+							onChange={(editorState) => setEditorState(editorState)}
+							readOnly={true}
+						/>
+					</div>
 
 					<div className="overview__posts flex flex-col flex-jc-c">
 						{prompt.posts.length > 0 ? (

@@ -8,10 +8,44 @@ const promptSchema = new mongoose.Schema({
 	description: {
 		type: String,
 	},
+	content: {
+		type: mongoose.Schema.Types.Mixed,
+	},
 	type: {
 		type: String,
 		required: true,
 	},
+	grade: {
+		grade_3: {
+			type: Boolean,
+			default: false,
+		},
+		grade_4: {
+			type: Boolean,
+			default: false,
+		},
+		grade_5: {
+			type: Boolean,
+			default: false,
+		},
+		grade_6: {
+			type: Boolean,
+			default: false,
+		},
+		grade_7: {
+			type: Boolean,
+			default: false,
+		},
+		grade_8: {
+			type: Boolean,
+			default: false,
+		},
+		grade_any: {
+			type: Boolean,
+			default: false,
+		},
+	},
+
 	createdOn: {
 		type: Date,
 		required: true,

@@ -7,17 +7,41 @@
 		font-weight: 500;
 	}
 	&__metadata {
-		.type {
-			padding: 1rem;
-		}
-
+		.grade,
+		.type,
 		.datetime {
 			padding: 1rem;
 		}
 	}
 	&__description {
-		color: $gray-400;
+		color: $gray-500;
 		text-align: justify;
+	}
+
+	&__content {
+		display: block;
+		max-height: 60vh;
+		overflow-y: scroll;
+		/* width */
+		&::-webkit-scrollbar {
+			width: 5px;
+		}
+
+		/* Track */
+		&::-webkit-scrollbar-track {
+			background: #f1f1f1;
+		}
+
+		/* Handle */
+		&::-webkit-scrollbar-thumb {
+			background: #888;
+			border-radius: 5px;
+		}
+
+		/* Handle on hover */
+		&::-webkit-scrollbar-thumb:hover {
+			background: #555;
+		}
 	}
 
 	&__admin {

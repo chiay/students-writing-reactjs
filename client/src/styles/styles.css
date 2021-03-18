@@ -144,11 +144,14 @@ input::placeholder {
   overflow: auto;
   background-color: black;
   background-color: rgba(0, 0, 0, 0.4);
+  z-index: 99;
 }
 .modal__body {
   position: fixed;
   background: white;
   width: 60%;
+  max-height: 80vh;
+  overflow-y: auto;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -304,7 +307,7 @@ input::placeholder {
 }
 
 .promptList {
-  max-width: 70%;
+  max-width: 80vw;
   padding: 0 3rem;
   display: block;
 }
@@ -340,8 +343,11 @@ input::placeholder {
   font-size: 0.75rem;
   color: #A1A1AA;
 }
-.prompt__main .metadata .type {
+.prompt__main .metadata .grade {
   margin-right: 0.5rem;
+}
+.prompt__main .metadata .type {
+  margin: 0 0.5rem;
 }
 .prompt__main .metadata .datetime {
   margin-left: 0.5rem;
@@ -365,15 +371,36 @@ input::placeholder {
   text-align: center;
   font-weight: 500;
 }
-.overview__metadata .type {
-  padding: 1rem;
-}
+.overview__metadata .grade,
+.overview__metadata .type,
 .overview__metadata .datetime {
   padding: 1rem;
 }
 .overview__description {
-  color: #A1A1AA;
+  color: #71717A;
   text-align: justify;
+}
+.overview__content {
+  display: block;
+  max-height: 60vh;
+  overflow-y: scroll;
+  /* width */
+  /* Track */
+  /* Handle */
+  /* Handle on hover */
+}
+.overview__content::-webkit-scrollbar {
+  width: 5px;
+}
+.overview__content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+.overview__content::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+.overview__content::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 .overview__admin {
   padding: 1rem;
@@ -508,21 +535,24 @@ input::placeholder {
   margin: 1rem 1rem;
 }
 
-.modal__content form {
+.modal__body .content form {
   width: 80%;
 }
-.modal__content form .formLabel {
+.modal__body .content form .formLabel {
   text-align: left;
   padding: 0.5rem 0;
 }
-.modal__content form input,
-.modal__content form select {
+.modal__body .content form input,
+.modal__body .content form select {
   padding: 0.5rem;
   border: 1px solid #D4D4D8;
   border-radius: 0.5rem;
   font-family: inherit;
 }
-.modal__content form .buttonPanel button {
+.modal__body .content form .gradeCheckbox input {
+  margin: 0 0.5rem;
+}
+.modal__body .content form .buttonPanel button {
   width: 20%;
   margin: 1rem 1rem;
 }

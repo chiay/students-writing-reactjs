@@ -8,8 +8,11 @@
 		.metadata {
 			font-size: $text-xs;
 			color: $gray-400;
-			.type {
+			.grade {
 				margin-right: 0.5rem;
+			}
+			.type {
+				margin: 0 0.5rem;
 			}
 			.datetime {
 				margin-left: 0.5rem;
