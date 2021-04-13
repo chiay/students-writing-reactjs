@@ -1,5 +1,17 @@
 import structures from './SentenceStructure';
 import compromise from 'compromise';
+import customTags from './Plugin';
+
+/**
+ * Initialize more configurations
+ * 1. Add custom tags for subject and object pronouns
+ *
+ * @version 1.0.0
+ * @since 1.0.0
+ */
+function init() {
+	compromise.extend(customTags);
+}
 
 /**
  * Filter a list of sentence structures
@@ -52,6 +64,7 @@ export function getFullStructCheck(sentence, filteredStructures) {
 		return compromise(sentence).has(structure);
 	});
 }
+
 /**
  * Take one paragraph and analyze each sentence with structures
  *
