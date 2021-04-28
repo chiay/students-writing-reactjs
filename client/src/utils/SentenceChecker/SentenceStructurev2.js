@@ -826,4 +826,167 @@ module.exports = [
 	//'#Determiner #Noun #Verb #Preposition #Determiner #Noun',
 	//'#Determiner #Noun #Verb #Preposition #Determiner #Noun #Preposition #Object',
 	//'#Determiner #Noun #Verb #Preposition #Determiner #Noun #Preposition #Determiner #Noun',
+
+	/****************************************************************************************************/
+
+	//'#Determiner #Noun (and|or) #Determiner #Noun #Verb',
+	//'#Determiner #Noun (and|or) #Determiner #Noun #Verb #Object',
+	//'#Determiner #Noun (and|or) #Determiner #Noun #Verb #Adjective',
+
+	'#Determiner #Noun (and|or) #Determiner #Noun #Verb #Adjective?',
+
+	//'#Determiner #Noun (and|or) #Determiner #Noun #Verb #Object #Preposition #Object',
+	//'#Determiner #Noun (and|or) #Determiner #Noun #Verb #Object #Preposition #Determiner #Noun',
+	//'#Determiner #Noun (and|or) #Determiner #Noun #Verb #Object #Preposition #Determiner #Adjective? #Noun',
+
+	'#Determiner #Noun (and|or) #Determiner #Adjective? #Noun #Verb (#Object|#Determiner #Adjective? #Noun)? (#Preposition [#Object|#Determiner #Adjective? #Noun])?',
+
+	//'#Determiner #Noun (and|or) #Determiner #Noun #Verb #Determiner #Noun',
+	//'#Determiner #Noun (and|or) #Determiner #Noun #Verb #Determiner #Noun #Preposition #Object',
+	//'#Determiner #Noun (and|or) #Determiner #Noun #Verb #Determiner #Noun #Preposition #Determiner #Noun',
+	//'#Determiner #Noun (and|or) #Determiner #Noun #Verb #Determiner #Noun #Preposition #Determiner #Adjective #Noun',
+
+	//'#Determiner #Noun (and|or) #Determiner #Noun #Verb #Determiner #Noun (#Preposition [#Object|#Determiner #Adjective? #Noun])?',
+
+	//'#Determiner #Noun (and|or) #Determiner #Noun #Verb #Determiner #Adjective #Noun',
+	//'#Determiner #Noun (and|or) #Determiner #Noun #Verb #Determiner #Adjective #Noun #Preposition #Object',
+	//'#Determiner #Noun (and|or) #Determiner #Noun #Verb #Determiner #Adjective #Noun #Preposition #Determiner #Noun',
+	//'#Determiner #Noun (and|or) #Determiner #Noun #Verb #Determiner #Adjective #Noun #Preposition #Determiner #Adjective #Noun',
+
+	//'#Determiner #Noun (and|or) #Determiner #Noun #Verb #Preposition #Object',
+	//'#Determiner #Noun (and|or) #Determiner #Noun #Verb #Preposition #Object #Preposition #Determiner #Noun',
+
+	//'#Determiner #Noun (and|or) #Determiner #Noun #Verb #Preposition #Determiner #Noun #Preposition #Determiner #Noun',
+	'#Determiner #Noun (and|or) #Determiner #Adjective? #Noun #Verb #Preposition #Determiner #Adjective? #Noun #Preposition (#Object|#Determiner #Adjective? #Noun)?',
+
+	//'#Determiner #Noun (and|or) #Determiner #Adjective #Noun #Verb',
+	//'#Determiner #Noun (and|or) #Determiner #Adjective #Noun #Verb #Determiner #Noun #Preposition #Object',
+	//'#Determiner #Noun (and|or) #Determiner #Adjective #Noun #Verb #Determiner #Adjective #Noun #Preposition #Object',
+	//'#Determiner #Noun (and|or) #Determiner #Adjective #Noun #Verb #Determiner #Adjective #Noun #Preposition #Determiner #Adjective #Noun',
+	//'#Determiner #Noun (and|or) #Determiner #Adjective #Noun #Verb #Preposition #Determiner #Noun #Preposition #Determiner #Noun',
+
+	//'#Determiner #Noun (and|or) #Determiner #Adjective #Noun #Verb #Preposition #Determiner #Adjective #Noun #Preposition #Object',
+	//'#Determiner #Noun (and|or) #Determiner #Adjective #Noun #Verb #Preposition #Determiner #Adjective #Noun #Preposition #Determiner #Noun',
+	//'#Determiner #Noun (and|or) #Determiner #Adjective #Noun #Verb #Preposition #Determiner #Adjective #Noun #Preposition #Determiner #Adjective #Noun',
+
+	'#Determiner #Noun (and|or) #Determiner #Adjective? #Noun #Verb #Adjective?',
+	//'#Determiner #Noun (and|or) #Determiner #Adjective #Noun #Verb #Object #Preposition #Object',
+	//'#Determiner #Noun (and|or) #Determiner #Adjective #Noun #Verb #Object #Preposition #Determiner #Noun',
+	//'#Determiner #Noun (and|or) #Determiner #Adjective #Noun #Verb #Object #Preposition #Determiner #Adjective #Noun',
+
+	//'#Determiner #Noun (and|or) #Determiner #Adjective? #Noun #Verb #Object #Preposition (#Object|#Determiner #Adjective? #Noun)',
+
+	'#Determiner #Noun (and|or) #Subject #Preposition #Verb #Object',
+	'#Determiner #Noun (and|or) #Subject #Preposition #Verb #Determiner #Adjective #Noun #Preposition #Determiner #Adjective #Noun',
+
+	//'#Determiner #Noun (and|or) #Subject #Verb',
+	'#Determiner #Noun (and|or) #Subject #Verb (#Adjective|#Preposition #Object)?',
+
+	// '#Determiner #Noun (and|or) #Subject #Verb #Object',
+	// '#Determiner #Noun (and|or) #Subject #Verb #Object #Preposition #Object',
+	// '#Determiner #Noun (and|or) #Subject #Verb #Object #Preposition #Determiner #Adjective #Noun',
+
+	'#Determiner #Noun (and|or) #Subject #Verb #Object (#Preposition [#Object|#Determiner #Adjective? #Noun])?',
+
+	//'#Determiner #Noun (and|or) #Subject #Verb #Preposition #Object',
+	//'#Determiner #Noun (and|or) #Subject #Verb #Preposition #Determiner #Adjective #Noun',
+	//'#Determiner #Noun (and|or) #Subject #Verb #Preposition #Determiner #Noun #Preposition #Determiner #Adjective #Noun',
+	//'#Determiner #Noun (and|or) #Subject #Verb #Preposition #Determiner #Adjective #Noun #Preposition #Determiner #Adjective #Noun',
+
+	'#Determiner #Noun (and|or) #Subject #Verb #Preposition #Determiner #Adjective? #Noun (#Preposition #Determiner #Adjective? #Noun)?',
+
+	//'#Determiner #Noun (and|or) #Subject #Verb #Determiner #Adjective #Noun',
+	//'#Determiner #Noun (and|or) #Subject #Verb #Determiner #Adjective #Noun #Preposition #Determiner #Noun',
+	//'#Determiner #Noun (and|or) #Subject #Verb #Determiner #Adjective #Noun #Preposition #Object',
+	//'#Determiner #Noun (and|or) #Subject #Verb #Determiner #Adjective #Noun #Preposition #Determiner #Adjective #Noun',
+
+	'#Determiner #Noun (and|or) #Subject #Verb #Determiner #Adjective? #Noun (#Preposition [#Object|#Determiner #Adjective? #Noun])?',
+
+	// '#Determiner #Noun (and|or) #Subject #Verb #Determiner #Noun',
+	// '#Determiner #Noun (and|or) #Subject #Verb #Determiner #Noun #Preposition #Object',
+	// '#Determiner #Noun (and|or) #Subject #Verb #Determiner #Noun #Preposition #Determiner #Noun',
+	// '#Determiner #Noun (and|or) #Subject #Verb #Determiner #Noun #Preposition #Determiner #Adjective #Noun',
+
+	'#Determiner #Adjective? #Noun (and|or) #Noun #Verb',
+
+	//'#Determiner #Adjective #Noun (and|or) #Determiner #Noun #Verb',
+	//'#Determiner #Adjective #Noun (and|or) #Determiner #Noun #Verb #Adjective',
+
+	// '#Determiner #Adjective #Noun (and|or) #Determiner #Noun #Verb #Object #Preposition #Object',
+	// '#Determiner #Adjective #Noun (and|or) #Determiner #Noun #Verb #Object #Preposition #Determiner #Noun',
+	// '#Determiner #Adjective #Noun (and|or) #Determiner #Noun #Verb #Object #Preposition #Determiner #Adjective #Noun',
+
+	// '#Determiner #Adjective #Noun (and|or) #Determiner #Noun #Verb #Determiner #Adjective #Noun',
+	// '#Determiner #Adjective #Noun (and|or) #Determiner #Noun #Verb #Determiner #Adjective #Noun #Preposition #Object',
+	// '#Determiner #Adjective #Noun (and|or) #Determiner #Noun #Verb #Determiner #Adjective #Noun #Preposition #Determiner #Noun',
+	// '#Determiner #Adjective #Noun (and|or) #Determiner #Noun #Verb #Determiner #Adjective #Noun #Preposition #Determiner #Adjective #Noun',
+
+	//'#Determiner #Adjective #Noun (and|or) #Determiner #Noun #Verb #Preposition #Determiner #Adjective #Noun',
+	//'#Determiner #Adjective #Noun (and|or) #Determiner #Noun #Verb #Preposition #Determiner #Adjective #Noun #Preposition #Determiner #Noun',
+	//'#Determiner #Adjective #Noun (and|or) #Determiner #Noun #Verb #Preposition #Determiner #Adjective #Noun #Preposition #Determiner #Adjective #Noun',
+
+	//'#Determiner #Adjective #Noun (and|or) #Determiner #Noun #Verb #Preposition #Object #Preposition #Determiner #Noun',
+
+	//'#Determiner #Adjective #Noun (and|or) #Determiner #Adjective #Noun #Verb',
+	//'#Determiner #Adjective #Noun (and|or) #Determiner #Adjective #Noun #Verb #Adjective',
+	//'#Determiner #Adjective #Noun (and|or) #Determiner #Adjective #Noun #Verb #Determiner #Noun #Preposition #Object',
+	//'#Determiner #Adjective #Noun (and|or) #Determiner #Adjective #Noun #Verb #Determiner #Noun #Preposition #Determiner #Noun',
+
+	// '#Determiner #Adjective #Noun (and|or) #Determiner #Adjective #Noun #Verb #Determiner #Adjective #Noun',
+	// '#Determiner #Adjective #Noun (and|or) #Determiner #Adjective #Noun #Verb #Determiner #Adjective #Noun #Preposition #Object',
+	// '#Determiner #Adjective #Noun (and|or) #Determiner #Adjective #Noun #Verb #Determiner #Adjective #Noun #Preposition #Determiner #Adjective #Noun',
+
+	// '#Determiner #Adjective #Noun (and|or) #Determiner #Adjective #Noun #Verb #Object',
+	// '#Determiner #Adjective #Noun (and|or) #Determiner #Adjective #Noun #Verb #Object #Preposition #Object',
+	// '#Determiner #Adjective #Noun (and|or) #Determiner #Adjective #Noun #Verb #Object #Preposition #Determiner #Noun',
+	// '#Determiner #Adjective #Noun (and|or) #Determiner #Adjective #Noun #Verb #Object #Preposition #Determiner #Adjective #Noun',
+
+	//'#Determiner #Adjective #Noun (and|or) #Determiner #Adjective #Noun #Verb #Preposition #Determiner #Noun #Preposition #Determiner #Noun',
+	//'#Determiner #Adjective #Noun (and|or) #Determiner #Adjective #Noun #Verb #Preposition #Determiner #Noun #Preposition #Determiner #Adjective #Noun',
+	//'#Determiner #Adjective #Noun (and|or) #Determiner #Adjective #Noun #Verb #Preposition #Determiner #Adjective #Noun',
+	//'#Determiner #Adjective #Noun (and|or) #Determiner #Adjective #Noun #Verb #Preposition #Determiner #Adjective #Noun #Preposition #Determiner #Noun',
+	//'#Determiner #Adjective #Noun (and|or) #Determiner #Adjective #Noun #Verb #Preposition #Determiner #Adjective #Noun #Preposition #Determiner #Adjective #Noun',
+	//'#Determiner #Adjective #Noun (and|or) #Determiner #Adjective #Noun #Verb #Preposition #Determiner #Adjective #Noun #Preposition #Object',
+
+	//'#Determiner #Adjective #Noun (and|or) #Subject #Verb',
+	//'#Determiner #Adjective #Noun (and|or) #Subject #Verb #Object',
+	//'#Determiner #Adjective #Noun (and|or) #Subject #Verb #Adjective',
+
+	//'#Determiner #Adjective #Noun (and|or) #Subject #Verb #Determiner #Noun',
+	//'#Determiner #Adjective #Noun (and|or) #Subject #Verb #Determiner #Noun #Preposition #Determiner #Noun',
+	//'#Determiner #Adjective #Noun (and|or) #Subject #Verb #Determiner #Noun #Preposition #Object',
+
+	// '#Determiner #Adjective #Noun (and|or) #Subject #Verb #Determiner #Adjective #Noun',
+	// '#Determiner #Adjective #Noun (and|or) #Subject #Verb #Determiner #Adjective #Noun #Preposition #Determiner #Noun',
+	// '#Determiner #Adjective #Noun (and|or) #Subject #Verb #Determiner #Adjective #Noun #Preposition #Determiner #Adjective #Noun',
+	// '#Determiner #Adjective #Noun (and|or) #Subject #Verb #Determiner #Adjective #Noun #Preposition #Object',
+
+	// '#Determiner #Adjective #Noun (and|or) #Subject #Verb #Preposition #Determiner #Noun #Preposition #Object',
+	// '#Determiner #Adjective #Noun (and|or) #Subject #Verb #Preposition #Determiner #Noun #Preposition #Determiner #Adjective #Noun',
+
+	// '#Determiner #Adjective #Noun (and|or) #Subject #Verb #Preposition #Determiner #Adjective #Noun',
+	// '#Determiner #Adjective #Noun (and|or) #Subject #Verb #Preposition #Determiner #Adjective #Noun #Preposition #Object',
+	// '#Determiner #Adjective #Noun (and|or) #Subject #Verb #Preposition #Determiner #Adjective #Noun #Preposition #Determiner #Noun',
+	// '#Determiner #Adjective #Noun (and|or) #Subject #Verb #Preposition #Determiner #Adjective #Noun #Preposition #Determiner #Adjective #Noun',
+
+	// '#Determiner #Adjective #Noun (and|or) #Subject #Verb #Preposition #Object',
+	// '#Determiner #Adjective #Noun (and|or) #Subject #Verb #Preposition #Object #Preposition #Object',
+	// '#Determiner #Adjective #Noun (and|or) #Subject #Verb #Preposition #Object #Preposition #Determiner #Noun',
+	// '#Determiner #Adjective #Noun (and|or) #Subject #Verb #Preposition #Object #Preposition #Determiner #Adjective #Noun',
+
+	//'#Determiner #Adjective #Noun (and|or) #Subject #Verb #Object #Preposition #Object',
+	'#Determiner #Adjective #Noun (and|or) #Subject #Verb #Object #Preposition #Object #Preposition #Object',
+
+	// '#Determiner #Adjective #Noun (and|or) #Subject #Verb #Object #Preposition #Determiner #Noun',
+	// '#Determiner #Adjective #Noun (and|or) #Subject #Verb #Object #Preposition #Determiner #Adjective #Noun',
+
+	'#Subject (and|or) #Subject #Verb',
+	// '#Subject (and|or) #Subject #Verb #Determiner #Noun',
+	// '#Subject (and|or) #Subject #Verb #Determiner #Adjective #Noun',
+	// '#Subject (and|or) #Subject #Verb #Determiner #Adjective #Noun #Preposition #Object',
+	// '#Subject (and|or) #Subject #Verb #Determiner #Adjective #Noun #Preposition #Determiner #Adjective',
+	//'#Subject (and|or) #Subject #Verb #Determiner #Adjective #Noun #Preposition #Determiner #Noun',
+	//'#Subject (and|or) #Subject #Verb #Determiner #Adjective #Noun #Preposition #Determiner #Adjective #Noun',
+
+	'#Subject (and|or) #Subject #Verb #Determiner #Adjective? #Noun (#Preposition [#Object|#Determiner #Adjective? #Noun])?',
 ];

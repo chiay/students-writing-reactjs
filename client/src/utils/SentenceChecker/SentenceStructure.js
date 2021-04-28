@@ -103,7 +103,7 @@ module.exports = [
 	'(#Determiner|#Possessive) #Adjective? #Noun #Verb #Adjective',
 	/****************************************************************************************************/
 
-	'#Subject #Verb (#Object|#Adjective)',
+	'#Subject #Verb (#Object|#Adjective)?',
 	'#Subject #Verb #Object? #Preposition #Object',
 	'#Subject #Verb #Object #Preposition #Determiner #Adjective? #Noun',
 
@@ -128,4 +128,44 @@ module.exports = [
 	'#Determiner #Adjective? #Noun #Verb #Preposition #Determiner #Adjective? #Noun (#Preposition [#Object|#Determiner #Adjective? #Noun])?',
 
 	'#Determiner #Adjective? #Noun #Verb #Preposition #Object (#Determiner #Adjective #Noun)?',
+
+	/****************************************************************************************************/
+
+	'#Determiner #Adjective? #Noun (and|or) #Determiner #Adjective? #Noun #Verb (#Object|#Determiner #Adjective? #Noun)? (#Preposition [#Object|#Determiner #Adjective? #Noun])?',
+
+	'#Determiner #Adjective? #Noun (and|or) #Determiner #Adjective? #Noun #Verb #Preposition (#Object|#Determiner #Adjective? #Noun) (#Preposition [#Object|#Determiner #Adjective? #Noun])?',
+
+	'#Determiner #Adjective? #Noun (and|or) #Determiner #Adjective? #Noun #Verb #Adjective?',
+
+	'#Determiner #Adjective? #Noun (and|or) #Subject #Preposition #Verb (#Object|#Determiner #Adjective? #Noun) (#Preposition [#Object|#Determiner #Adjective? #Noun])?',
+
+	'#Determiner #Adjective? #Noun (and|or) #Subject #Verb (#Adjective|#Preposition #Object)?',
+
+	'#Determiner #Adjective? #Noun (and|or) #Subject #Verb #Object (#Preposition [#Object|#Determiner #Adjective? #Noun])?',
+
+	'#Determiner #Adjective? #Noun (and|or) #Subject #Verb #Preposition (#Object|#Determiner #Adjective? #Noun) (#Preposition [#Object|#Determiner #Adjective? #Noun])?',
+
+	'#Determiner #Adjective? #Noun (and|or) #Subject #Verb #Determiner #Adjective? #Noun (#Preposition [#Object|#Determiner #Adjective? #Noun])?',
+
+	'#Determiner #Adjective? #Noun (and|or) #Subject #Verb #Object #Preposition (#Object|#Determiner #Adjective? #Noun) (#Preposition [#Object|#Determiner #Adjective? #Noun])?',
+
+	'#Determiner #Adjective? #Noun (and|or) #Noun #Verb',
+
+	'#Subject (and|or) #Subject #Verb (#Determiner #Adjective? #Noun #Preposition #Determiner #Adjective)?',
+
+	'#Subject (and|or) #Subject #Verb #Determiner #Adjective? #Noun (#Preposition [#Object|#Determiner #Adjective? #Noun])?',
+
+	'#Subject (and|or) #Subject #Verb #Preposition (#Object|#Determiner #Adjective? #Noun) (#Preposition [#Object|#Determiner #Adjective? #Noun])?',
+
+	'#Subject (and|or) #Subject #Verb #Adjective',
+
+	'#Subject (and|or) #Subject #Verb #Object (#Preposition [#Object|#Determiner #Adjective? #Noun])?',
+
+	'#Subject (and|or) #Determiner #Adjective? #Noun #Verb',
+
+	'#Subject (and|or) #Determiner #Adjective? #Noun #Verb #Determiner #Adjective? #Noun (#Preposition [#Object|#Determiner #Adjective? #Noun])?',
+
+	'#Subject (and|or) #Determiner #Adjective? #Noun #Verb #Preposition (#Object|#Determiner #Adjective? #Noun) (#Preposition [#Object|#Determiner #Adjective? #Noun])?',
+
+	'#Subject (and|or) #Determiner #Adjective? #Noun #Verb #Object #Preposition (#Object|#Determiner #Adjective? #Noun)',
 ];
