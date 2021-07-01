@@ -1,45 +1,21 @@
 import {
-	filterStructure,
 	hasFullStructCheck,
 	getFullStructCheck,
 	getFullParagraphCheck,
 } from '../utils/SentenceChecker/StructureChecker';
 
 const s1 = 'I like science.';
+const s2 = 'He loves her.';
 const p1 = 'I like science. I like science. I like science.';
-
-describe('get filtered structures', () => {
-	test('for pronouns and not null', () => {
-		const filtered = filterStructure(s1);
-		expect(filtered).not.toBeNull();
-	});
-
-	test('for pronouns array', () => {
-		const filtered = filterStructure(s1);
-		expect(filtered).toContain(
-			'#Pronoun #Verb #Preposition #Determiner #Noun #Adverb?'
-		);
-
-		expect(filtered).not.toContain(
-			'#Adverb #Pronoun #Verb #Determiner #Adjective #Noun'
-		);
-
-		expect(filtered).not.toContain(
-			'#Determiner #Noun #Adverb #Verb #Preposition #Determiner #Noun'
-		);
-	});
-});
 
 describe('check', () => {
 	test('to fully match one structure and return boolean value', () => {
-		const filtered = filterStructure(s1);
-		const result = hasFullStructCheck(s1, filtered);
+		const result = hasFullStructCheck(s1);
 		expect(result).toBeTruthy();
 	});
 
 	test('to fully match one structure and return structure string', () => {
-		const filtered = filterStructure(s1);
-		const result = getFullStructCheck(s1, filtered);
+		const result = getFullStructCheck(s1);
 		expect(result).toBe('#Pronoun #Verb (#Adjective|#Noun)');
 	});
 });
@@ -53,5 +29,12 @@ describe('paragraph check', () => {
 		};
 
 		expect(result).toEqual([expected, expected, expected]);
+	});
+});
+
+describe('check custom tags plugin', () => {
+	test('if subject and object tags detected', () => {
+		const result = getFullStructCheck(s2);
+		expect(result).toBe('#Subject #Verb (#Object|#Adjective)?');
 	});
 });

@@ -20,6 +20,7 @@ function init() {
  * @param {string} sentence
  * @returns {array} Filtered list of structures that match part of speech of first word
  * @since 1.0.0
+ * @deprecated
  */
 export function filterStructure(sentence) {
 	const identifier = sentence.split(' ')[0];
@@ -33,15 +34,15 @@ export function filterStructure(sentence) {
 /**
  * Match sentence with list of structures using Compromise and returns boolean result
  *
- * @version 1.0.0
+ * @version 1.0.1
  * @param {string} sentence String for analysis
- * @param {array} filteredStructures Filtered list of structures(optional)
+ * @param {array} filteredStructures Filtered list of structures(no longer needed)
  * @returns {boolean} True if one structure is matched
  * 						 False if no match
  * @since 1.0.0
  */
-export function hasFullStructCheck(sentence, filteredStructures) {
-	const structures = filteredStructures ?? filterStructure(sentence);
+export function hasFullStructCheck(sentence) {
+	init();
 
 	return structures.some((structure) => {
 		return compromise(sentence).has(structure);
@@ -51,14 +52,14 @@ export function hasFullStructCheck(sentence, filteredStructures) {
 /**
  * Match sentence with list of structures using Compromise and returns structure that matches
  *
- * @version 1.0.0
+ * @version 1.0.1
  * @param {string} sentence String for analysis
- * @param {array} filteredStructures Filtered list of structures(optional)
+ * @param {array} filteredStructures Filtered list of structures(no longer needed)
  * @returns {string} structure that matches sentence
  * @since 1.0.0
  */
-export function getFullStructCheck(sentence, filteredStructures) {
-	const structures = filteredStructures ?? filterStructure(sentence);
+export function getFullStructCheck(sentence) {
+	init();
 
 	return structures.find((structure) => {
 		return compromise(sentence).has(structure);
