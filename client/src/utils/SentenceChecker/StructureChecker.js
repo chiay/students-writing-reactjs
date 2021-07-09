@@ -1,6 +1,6 @@
 import structures from './SentenceStructure';
 import compromise from 'compromise';
-import customTags from './Plugin';
+import { customTags } from './Plugin';
 
 /**
  * Initialize more configurations
@@ -9,7 +9,7 @@ import customTags from './Plugin';
  * @version 1.0.0
  * @since 1.0.0
  */
-function init() {
+function init() {	
 	compromise.extend(customTags);
 }
 

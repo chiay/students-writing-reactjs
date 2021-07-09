@@ -4,9 +4,11 @@ import {
 	getFullParagraphCheck,
 } from '../utils/SentenceChecker/StructureChecker';
 
-const s1 = 'I like science.';
-const s2 = 'He loves her.';
+const s1 = 'The rabbit ran and fell.';
+//const s2 = 'He loves her.';
 const p1 = 'I like science. I like science. I like science.';
+const s1Struct = '#Determiner #Noun #Verb (and|or) #Verb';
+
 
 describe('check', () => {
 	test('to fully match one structure and return boolean value', () => {
@@ -16,7 +18,7 @@ describe('check', () => {
 
 	test('to fully match one structure and return structure string', () => {
 		const result = getFullStructCheck(s1);
-		expect(result).toBe('#Pronoun #Verb (#Adjective|#Noun)');
+		expect(result).toBe(s1Struct);
 	});
 });
 
@@ -34,7 +36,7 @@ describe('paragraph check', () => {
 
 describe('check custom tags plugin', () => {
 	test('if subject and object tags detected', () => {
-		const result = getFullStructCheck(s2);
-		expect(result).toBe('#Subject #Verb (#Object|#Adjective)?');
+		const result = getFullStructCheck(s1);
+		expect(result).toBe(s1Struct);
 	});
 });
